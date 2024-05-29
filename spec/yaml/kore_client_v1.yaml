@@ -8,6 +8,7 @@ info:
   version: "1.0.0"
 servers:
   - url: "https://client.api.korewireless.com"
+x-hideTryItPanel: true
 paths:
   /v1/clients:
     get:
