@@ -1,23 +1,42 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "ClientsAPI",
-    "description": "The Client Management APIs provide a comprehensive set of endpoints for managing clients within the system. These APIs facilitate operations such as creating, retrieving, updating, and deleting client information.",
-    "version": "1.0.0"
+    "title": "v1-token",
+    "version": "1.0"
   },
   "servers": [
     {
-      "url": "https://client.api.korewireless.com"
+      "url": "https://api.korewireless.com/api-services"
     }
   ],
   "x-hideTryItPanel": true,
   "paths": {
-    "/v1/ping": {
-      "get": {
-        "operationId": "getPingStatus",
+    "/v1/auth/token": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grant_type": {
+                    "type": "string"
+                  },
+                  "client_id": {
+                    "type": "string"
+                  },
+                  "client_secret": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "200 response",
             "headers": {
               "Access-Control-Allow-Origin": {
                 "schema": {
@@ -43,13 +62,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/200Ping"
+                  "$ref": "#/components/schemas/200GetToken"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "400 response",
             "headers": {
               "Access-Control-Allow-Origin": {
                 "schema": {
@@ -81,7 +100,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "401 response",
             "headers": {
               "Access-Control-Allow-Origin": {
                 "schema": {
@@ -107,77 +126,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Methods": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Credentials": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Headers": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Methods": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Credentials": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Headers": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/401Error"
                 }
               }
             }
           },
           "500": {
-            "description": "Internal Server Error",
+            "description": "500 response",
             "headers": {
               "Access-Control-Allow-Origin": {
                 "schema": {
@@ -208,17 +163,12 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "TokenAuthorization": []
-          }
-        ]
+        }
       },
       "options": {
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "200 response",
             "headers": {
               "Access-Control-Allow-Origin": {
                 "schema": {
@@ -249,21 +199,12 @@
   },
   "components": {
     "schemas": {
-      "200Ping": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "description": "Success message from the Ping endpoint"
-          }
-        }
-      },
       "Error": {
+        "type": "object",
         "required": [
           "code",
           "message"
         ],
-        "type": "object",
         "properties": {
           "code": {
             "type": "integer",
@@ -273,12 +214,49 @@
             "type": "string"
           }
         }
-      }
-    },
-    "securitySchemes": {
-      "TokenAuthorization": {
-        "type": "http",
-        "scheme": "bearer"
+      },
+      "Empty": {
+        "type": "object"
+      },
+      "200GetToken": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "example": "eyJhbGciOiJSUzI1NiIs",
+            "description": "Access token."
+          },
+          "expires_in": {
+            "type": "number",
+            "example": 3600,
+            "description": "Expiration time of the access token in seconds"
+          },
+          "token_type": {
+            "type": "string",
+            "example": "Bearer",
+            "description": "Type of the access token"
+          },
+          "scope": {
+            "type": "string",
+            "example": "email",
+            "description": "Scope of the token"
+          }
+        }
+      },
+      "401Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "invalid_client",
+            "description": "Error message."
+          },
+          "error_description": {
+            "type": "string",
+            "example": "Invalid client or Invalid client credentials",
+            "description": "Details of the error"
+          }
+        }
       }
     }
   }
