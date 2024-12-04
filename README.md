@@ -1,6 +1,6 @@
 # KORE OpenAPI
 
-This repository contains OpenAPISpec files of KORE public APIs that will be helpful for developers. The hierarchy of the resources are like below
+This repository contains OpenAPISpec files of KORE public APIs that will be helpful for developers. The hierarchy of the resources are like below.
 
 ````
 |-Product1/
