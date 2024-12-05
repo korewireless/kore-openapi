@@ -8,7 +8,7 @@ This repository contains OpenAPISpec files of KORE public APIs that will be help
   |- yaml/     [OpenAPISPec in Yaml format]
 |-Product2/
     |......
-|- LICENSE     [ MIT License ]
+|- LICENSE     [ Apache License ]
 |- README      [ README.md ]
 
 ````
