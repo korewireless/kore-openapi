@@ -1,6 +1,6 @@
 # KORE OpenAPI
 
-This repository contains OpenAPISpec files of KORE public APIs that will be helpful for developers. The folder structure is given below.
+This repository contains OpenAPISpec files of KORE public APIs that will be helpful for developers. The folder structure is given below for your reference.
 
 ````
 |-Product1/
