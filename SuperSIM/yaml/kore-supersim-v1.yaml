@@ -1103,6 +1103,37 @@ paths:
       description: Order an eSIM Profile.
       tags:
       - SupersimV1EsimProfile
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L -X POST "https://supersim.api.korewireless.com/v1/ESimProfiles" --data-urlencode "Eid=<YOUR_EID>" --header "Content-Type: application/x-www-form-urlencoded" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+            const data = new URLSearchParams({
+                Eid: '<YOUR_EID>',
+              });
+            const response = await fetch('https://supersim.api.korewireless.com/v1/ESimProfiles', {
+                method: 'POST',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                },
+                body: data.toString()
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+            response = requests.post("https://supersim.api.korewireless.com/v1/ESimProfiles",
+                headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN>"},
+                data={"Eid":"<YOUR_EID>"}
+            )
+            print(response.text)
       responses:
         '201':
           content:
@@ -1236,6 +1267,37 @@ paths:
       description: Retrieve a list of eSIM Profiles.
       tags:
       - SupersimV1EsimProfile
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L "https://supersim.api.korewireless.com/v1/ESimProfiles?Status=installed" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+
+            const url = "https://supersim.api.korewireless.com/v1/ESimProfiles";
+            const params = new URLSearchParams({ Status: "installed" });
+
+            const response = await fetch(`${url}?${params.toString()}`, {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+
+            response = requests.get("https://supersim.api.korewireless.com/v1/ESimProfiles", headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN"},
+            params={"Status": "installed"})
+            resp = response.json()
+            print(resp)
       parameters:
       - name: Eid
         in: query
@@ -1462,6 +1524,31 @@ paths:
       description: Fetch an eSIM Profile.
       tags:
       - SupersimV1EsimProfile
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L "https://supersim.api.korewireless.com/v1/ESimProfiles/<Sid>" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+            const response = await fetch('https://supersim.api.korewireless.com/v1/ESimProfiles/<Sid>', {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+            response = requests.get("https://supersim.api.korewireless.com/v1/ESimProfiles/<Sid>", headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN>"})
+            resp = response.json()
+            print(resp)
       parameters:
       - name: Sid
         in: path
