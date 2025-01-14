@@ -3499,56 +3499,32 @@ paths:
         - lang: 'NodeJs'
           label: NodeJs
           source: |
-            const https = require('https');
-            const { URLSearchParams } = require('url');
-            const url = "https://supersim.api.korewireless.com/v1/Sims";
-
-            const data = new URLSearchParams({ Iccid: "89883070000123456789", RegistrationCode: "H3LL0W0RLD" }).toString();
-
-            const options = {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Content-Length': Buffer.byteLength(data),
-                'Authorization': 'Bearer <YOUR_AUTH_TOKEN>'
-              }
-            };
-
-            const req = https.request(url, options, (res) => {
-              let responseData = '';
-
-              res.on('data', (chunk) => {
-                responseData += chunk;
+            import { URLSearchParams } from "url";
+            const data = new URLSearchParams({
+                Iccid: '89883070000123456789',
+                RegistrationCode: 'H3LL0W0RLD'
               });
-
-              res.on('end', () => {
-                console.log('Response:', responseData);
-              });
+            const response = await fetch('https://supersim.api.korewireless.com/v1/Sims', {
+                method: 'POST',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                },
+                body: data.toString()
             });
-
-            req.on('error', (error) => {
-              console.error('Error:', error);
-            });
-
-            req.write(data);
-            req.end();
+            const resp = await response.json();
+            console.log(resp);
         - lang: 'Python'
           label: Python
           source: |
             import requests
-            url = "https://supersim.api.korewireless.com/v1/Sims"
-            data = { "Iccid": "89883070000123456789", "RegistrationCode": "H3LL0W0RLD" }
-            headers = {
-                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
-            }
-
-            response = requests.post(url, data=data, headers=headers)
-
-            if response.status_code == 200:
-                print(response.json())
-            else:
-                print(f"Error: {response.status_code}, {response.text}")
-
+            response = requests.post(
+                "https://supersim.api.korewireless.com/v1/Sims",
+                headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN>},
+                data={"Iccid":"89883070000123456789", "RegistrationCode":"H3LL0W0RLD"}
+            )
+            resp = response.json()
+            print(resp)
       responses:
         '201':
           content:
@@ -3635,43 +3611,23 @@ paths:
         - lang: 'NodeJs'
           label: NodeJs
           source: |
-            const https = require('https');
-            const url = "https://supersim.api.korewireless.com/v1/Sims";
-            
-            const options = {
-              method: 'GET',
-              headers: {
-                'Authorization': `Bearer <YOUR_AUTH_TOKEN>`,
-              },
-            };
-
-            const req = https.request(url, options, (res) => {
-              let data = '';
-              res.on('data', (chunk) => {
-                data += chunk;
-              });
-              res.on('end', () => {
-                console.log("Response:", JSON.parse(data));
-              });
+            import { URLSearchParams } from "url";
+            const response = await fetch('https://supersim.api.korewireless.com/v1/Sims', {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
             });
-            req.on('error', (error) => {
-              console.error("Error:", error.message);
-            });
-            req.end();
+            const resp = await response.json();
+            console.log(resp);
         - lang: 'Python'
           label: Python
           source: |
             import requests
-            url = "https://supersim.api.korewireless.com/v1/Sims"
-            headers = {
-                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
-            }
-            response = requests.get(url, headers=headers)
-
-            if response.ok:
-                print("Response:", response.json())
-            else:
-                print("Error:", response.status_code, response.text)
+            response = requests.get("https://supersim.api.korewireless.com/v1/Sims", headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN>"})
+            resp = response.json()
+            print(resp)
       parameters:
       - name: Status
         in: query
@@ -3916,42 +3872,23 @@ paths:
         - lang: 'NodeJs'
           label: NodeJs
           source: |
-            const https = require('https');
-            const url = "https://supersim.api.korewireless.com/v1/Sims/<Sid>";
-            const options = {
-              method: 'GET',
-              headers: {
-                'Authorization': 'Bearer <YOUR_AUTH_TOKEN>'
-              }
-            };
-
-            https.get(url, options, (res) => {
-              let data = '';
-
-              res.on('data', (chunk) => {
-                data += chunk;
-              });
-
-              res.on('end', () => {
-                console.log('Response:', data);
-              });
-            }).on('error', (err) => {
-              console.error('Error:', err.message);
+            import { URLSearchParams } from "url";
+            const response = await fetch('https://supersim.api.korewireless.com/v1/Sims/<Sid>', {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
             });
+            const resp = await response.json();
+            console.log(resp);
         - lang: 'Python'
           label: Python
           source: |
             import requests
-            url = "https://supersim.api.korewireless.com/v1/Sims/<Sid>"
-            headers = {
-                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
-            }
-
-            response = requests.get(url, headers=headers)
-            if response.ok:
-                print("Response:", response.json())
-            else:
-                print("Error:", response.status_code, response.text)
+            response = requests.get("https://supersim.api.korewireless.com/v1/Sims/<Sid>", headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN>"})
+            resp = response.json()
+            print(resp)
       responses:
         '200':
           content:
