@@ -1,4 +1,20 @@
 {
+  "openapi": "3.0.1",
+  "info": {
+    "title": "KORE - Supersim",
+    "description": "This is the public KORE REST API.",
+    "termsOfService": "https://pardot.korewireless.com/koremsa",
+    "contact": {
+      "name": "KORE Support",
+      "url": "https://korewireless.service-now.com/csm",
+      "email": "support@korewireless.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
   "components": {
     "securitySchemes": {
       "accountSid_authToken": {
@@ -83,11 +99,11 @@
         "type": "string",
         "nullable": true,
         "description": "The type of Billing Period. Can be `ready` or `active`.",
+        "example": "active",
         "enum": [
           "ready",
           "active"
-        ],
-        "example": "ready"
+        ]
       },
       "supersim.v1.esim_profile": {
         "type": "object",
@@ -424,7 +440,7 @@
       "ip_command_enum_payload_type": {
         "type": "string",
         "nullable": true,
-        "description": "Either “text” or “binary”. For an IP Command sent to a Super SIM, `payload_type` is configurable. For an IP Command sent from a Super SIM, `payload_type` is always “binary”.",
+        "description": "Indicates how the payload is encoded. Either “text” or “binary”. For an IP Command sent to a Super SIM, `payload_type` is configurable. For an IP Command sent from a Super SIM, `payload_type` is always “binary”.",
         "enum": [
           "text",
           "binary"
@@ -939,29 +955,13 @@
       }
     }
   },
-  "info": {
-    "title": "KORE - Supersim",
-    "description": "This is the public KORE REST API.",
-    "termsOfService": "https://pardot.korewireless.com/koremsa",
-    "contact": {
-      "name": "KORE Support",
-      "url": "https://korewireless.service-now.com/csm",
-      "email": "support@korewireless.com"
-    },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
-    },
-    "version": "1.0.0"
-  },
-  "openapi": "3.0.1",
   "security": [
     {
       "OAuth": []
     }
   ],
   "x-hideTryItPanel": true,
-  "x-codeSamples": true,
+  "x-codeSamples": false,
   "paths": {
     "/v1/Sims/{SimSid}/BillingPeriods": {
       "servers": [
@@ -4602,6 +4602,23 @@
         "tags": [
           "SupersimV1Sim"
         ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -L -X POST \"https://supersim.api.korewireless.com/v1/Sims\" --header \"Authorization: Bearer <YOUR_AUTH_TOKEN>\" --header \"Content-Type: application/x-www-form-urlencoded\" --header \"Accept: application/json\" --data-urlencode \"Iccid=89883070000123456789\" --data-urlencode \"RegistrationCode=H3LL0W0RLD\"\n"
+          },
+          {
+            "lang": "NodeJs",
+            "label": "NodeJs",
+            "source": "const https = require('https');\nconst { URLSearchParams } = require('url');\nconst url = \"https://supersim.api.korewireless.com/v1/Sims\";\n\nconst data = new URLSearchParams({ Iccid: \"89883070000123456789\", RegistrationCode: \"H3LL0W0RLD\" }).toString();\n\nconst options = {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/x-www-form-urlencoded',\n    'Content-Length': Buffer.byteLength(data),\n    'Authorization': 'Bearer <YOUR_AUTH_TOKEN>'\n  }\n};\n\nconst req = https.request(url, options, (res) => {\n  let responseData = '';\n\n  res.on('data', (chunk) => {\n    responseData += chunk;\n  });\n\n  res.on('end', () => {\n    console.log('Response:', responseData);\n  });\n});\n\nreq.on('error', (error) => {\n  console.error('Error:', error);\n});\n\nreq.write(data);\nreq.end();\n"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\nurl = \"https://supersim.api.korewireless.com/v1/Sims\"\ndata = { \"Iccid\": \"89883070000123456789\", \"RegistrationCode\": \"H3LL0W0RLD\" }\nheaders = {\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n}\n\nresponse = requests.post(url, data=data, headers=headers)\n\nif response.status_code == 200:\n    print(response.json())\nelse:\n    print(f\"Error: {response.status_code}, {response.text}\")\n"
+          }
+        ],
         "responses": {
           "201": {
             "content": {
@@ -4713,6 +4730,23 @@
         "description": "Retrieve a list of Super SIMs from your account.",
         "tags": [
           "SupersimV1Sim"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -L \"https://supersim.api.korewireless.com/v1/Sims\" --header \"Authorization: Bearer <YOUR_AUTH_TOKEN>\"\n"
+          },
+          {
+            "lang": "NodeJs",
+            "label": "NodeJs",
+            "source": "const https = require('https');\nconst url = \"https://supersim.api.korewireless.com/v1/Sims\";\n\nconst options = {\n  method: 'GET',\n  headers: {\n    'Authorization': `Bearer <YOUR_AUTH_TOKEN>`,\n  },\n};\n\nconst req = https.request(url, options, (res) => {\n  let data = '';\n  res.on('data', (chunk) => {\n    data += chunk;\n  });\n  res.on('end', () => {\n    console.log(\"Response:\", JSON.parse(data));\n  });\n});\nreq.on('error', (error) => {\n  console.error(\"Error:\", error.message);\n});\nreq.end();\n"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\nurl = \"https://supersim.api.korewireless.com/v1/Sims\"\nheaders = {\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n}\nresponse = requests.get(url, headers=headers)\n\nif response.ok:\n    print(\"Response:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.text)\n"
+          }
         ],
         "parameters": [
           {
@@ -5049,6 +5083,23 @@
             "required": true
           }
         ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -L \"https://supersim.api.korewireless.com/v1/Sims/{Sid}\" --header \"Authorization: Bearer <YOUR_AUTH_TOKEN>\"   \n"
+          },
+          {
+            "lang": "NodeJs",
+            "label": "NodeJs",
+            "source": "const https = require('https');\nconst url = \"https://supersim.api.korewireless.com/v1/Sims/<Sid>\";\nconst options = {\n  method: 'GET',\n  headers: {\n    'Authorization': 'Bearer <YOUR_AUTH_TOKEN>'\n  }\n};\n\nhttps.get(url, options, (res) => {\n  let data = '';\n\n  res.on('data', (chunk) => {\n    data += chunk;\n  });\n\n  res.on('end', () => {\n    console.log('Response:', data);\n  });\n}).on('error', (err) => {\n  console.error('Error:', err.message);\n});\n"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\nurl = \"https://supersim.api.korewireless.com/v1/Sims/<Sid>\"\nheaders = {\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n}\n\nresponse = requests.get(url, headers=headers)\nif response.ok:\n    print(\"Response:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.text)\n"
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -5128,6 +5179,23 @@
         "description": "Updates the given properties of a Super SIM instance from your account.",
         "tags": [
           "SupersimV1Sim"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -L -X POST \"https://supersim.api.korewireless.com/v1/Sims/<Sid>\" --header \"Authorization: Bearer <YOUR_AUTH_TOKEN>\" --header \"Content-Type: application/x-www-form-urlencoded\" --header \"Accept: application/json\" --data-urlencode \"UniqueName=<NEW_UNIQUE_NAME>\" --data-urlencode \"CallbackUrl=<YOUR_CALLBACK_URL>\" --data-urlencode \"CallbackMethod=<GET_OR_POST>\"\n"
+          },
+          {
+            "lang": "NodeJs",
+            "label": "NodeJs",
+            "source": "const https = require('https');\nconst { URLSearchParams } = require('url');\nconst url = \"https://supersim.api.korewireless.com/v1/Sims/<Sid>\";\nconst data = new URLSearchParams({ \n  UniqueName: \"<NEW_UNIQUE_NAME>\", \n  CallbackUrl : \"<YOUR_CALLBACK_URL>\", \n  CallbackMethod : \"<GET_OR_POST>\" }).toString();\nconst options = {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/x-www-form-urlencoded',\n    'Content-Length': Buffer.byteLength(data),\n    'Authorization': 'Bearer <YOUR_AUTH_TOKEN>'\n  }\n};\n\nconst req = https.request(url, options, (res) => {\n  let responseData = '';\n  res.on('data', (chunk) => {\n    responseData += chunk;\n  });\n  res.on('end', () => {\n    console.log('Response:', responseData);\n  });\n});\n\nreq.on('error', (error) => {\n  console.error('Error:', error);\n});\n\nreq.write(data);\nreq.end();\n"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\nurl = \"https://supersim.api.korewireless.com/v1/Sims/<Sid>\"\ndata = { \n    \"UniqueName\": \"<NEW_UNIQUE_NAME>\", \n    \"CallbackUrl\" : \"<YOUR_CALLBACK_URL>\", \n    \"CallbackMethod\" : \"<GET_OR_POST>\" }\nheaders = {\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n}\nresponse = requests.post(url, data=data, headers=headers)\nif response.status_code == 200:\n    print(response.json())\nelse:\n    print(f\"Error: {response.status_code}, {response.text}\")\n"
+          }
         ],
         "parameters": [
           {
