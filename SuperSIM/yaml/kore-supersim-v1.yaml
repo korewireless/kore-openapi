@@ -1,3 +1,16 @@
+openapi: 3.0.1
+info:
+  title: KORE - Supersim
+  description: This is the public KORE REST API.
+  termsOfService: https://pardot.korewireless.com/koremsa
+  contact:
+    name: KORE Support
+    url: https://korewireless.service-now.com/csm
+    email: support@korewireless.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
 components:
   securitySchemes:
     accountSid_authToken:
@@ -72,10 +85,10 @@ components:
       type: string
       nullable: true
       description: The type of Billing Period. Can be `ready` or `active`.
+      example: active
       enum:
       - ready
       - active
-      example: 'ready'
     supersim.v1.esim_profile:
       type: object
       properties:
@@ -183,7 +196,7 @@ components:
         `available`, `downloaded`, `installed` or `failed`. See the [eSIM Profile
         Status Values](https://docs.korewireless.com/en-us/v/api/products/supersim/esimprofile-resource#status-values)
         for a description of each.'
-      example: 'new'
+      example: new
       enum:
       - new
       - reserving
@@ -299,7 +312,8 @@ components:
     fleet_enum_data_metering:
       type: string
       nullable: true
-      description: The model by which a SIMs usage is metered and billed. Defaults to `payg`.
+      description: The model by which a SIMs usage is metered and billed. Defaults
+        to `payg`.
       enum:
       - payg
     supersim.v1.ip_command:
@@ -332,8 +346,7 @@ components:
         sim_iccid:
           type: string
           nullable: true
-          description: The [ICCID](https://en.wikipedia.org/wiki/Subscriber_identity_module#ICCID)
-            of the [Super SIM](https://docs.korewireless.com/en-us/v/api/products/supersim/sim-resource)
+          description: The [ICCID](https://en.wikipedia.org/wiki/Subscriber_identity_module#ICCID) of the [Super SIM](https://docs.korewireless.com/en-us/v/api/products/supersim/sim-resource)
             that this IP Command was sent to or from.
         status:
           $ref: '#/components/schemas/ip_command_enum_status'
@@ -403,16 +416,15 @@ components:
     ip_command_enum_direction:
       type: string
       nullable: true
-      description: Either `to_sim` or `from_sim`. Indicates whether the IP Command resource was sent from or to the Super SIM.
+      description: Either `to_sim` or `from_sim`. Indicates whether the IP Command
+        resource was sent from or to the Super SIM.
       enum:
       - to_sim
       - from_sim
     ip_command_enum_payload_type:
       type: string
       nullable: true
-      description: "Either \u201Ctext\u201D or \u201Cbinary\u201D. For an IP Command\
-        \ sent to a Super SIM, `payload_type` is configurable. For an IP Command\
-        \ sent from a Super SIM, `payload_type` is always \u201Cbinary\u201D."
+      description: "Indicates how the payload is encoded. Either \u201Ctext\u201D or \u201Cbinary\u201D. For an IP Command sent to a Super SIM, `payload_type` is configurable. For an IP Command sent from a Super SIM, `payload_type` is always \u201Cbinary\u201D."  
       enum:
       - text
       - binary
@@ -679,9 +691,7 @@ components:
       - scheduled
     sim_enum_status_update:
       type: string
-      description: 'The new status of the resource. Can be: `ready`, `active`,
-        or `inactive`. See the [Super SIM Status Values](https://docs.korewireless.com/en-us/v/api/products/supersim/sim-resource#status-values)
-        for more info.'
+      description: 'The new status of the resource. Can be: `ready`, `active`, or `inactive`. See the [Super SIM Status Values](https://docs.korewireless.com/en-us/v/api/products/supersim/sim-resource#status-values) for more info.'
       enum:
       - ready
       - active
@@ -694,7 +704,7 @@ components:
           nullable: true
           description: IP address assigned to the given Super SIM
         ip_address_version:
-          $ref: '#/components/schemas/sim_ip_address_enum_ip_address_version'          
+          $ref: '#/components/schemas/sim_ip_address_enum_ip_address_version'
     sim_ip_address_enum_ip_address_version:
       type: string
       nullable: true
@@ -890,23 +900,10 @@ components:
       in: header
       schema:
         type: string
-info:
-  title: KORE - Supersim
-  description: This is the public KORE REST API.
-  termsOfService: https://pardot.korewireless.com/koremsa
-  contact:
-    name: KORE Support
-    url: https://korewireless.service-now.com/csm
-    email: support@korewireless.com
-  license:
-    name: Apache 2.0
-    url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.0
-openapi: 3.0.1
 security: 
   - OAuth: []
 x-hideTryItPanel: true
-x-codeSamples: true
+x-codeSamples: false
 paths:
   /v1/Sims/{SimSid}/BillingPeriods:
     servers:
@@ -3493,7 +3490,65 @@ paths:
       summary: Register a Super SIM
       description: Register a Super SIM to your Account
       tags:
-      - SupersimV1Sim
+        - SupersimV1Sim
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L -X POST "https://supersim.api.korewireless.com/v1/Sims" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>" --header "Content-Type: application/x-www-form-urlencoded" --header "Accept: application/json" --data-urlencode "Iccid=89883070000123456789" --data-urlencode "RegistrationCode=H3LL0W0RLD"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            const https = require('https');
+            const { URLSearchParams } = require('url');
+            const url = "https://supersim.api.korewireless.com/v1/Sims";
+
+            const data = new URLSearchParams({ Iccid: "89883070000123456789", RegistrationCode: "H3LL0W0RLD" }).toString();
+
+            const options = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Length': Buffer.byteLength(data),
+                'Authorization': 'Bearer <YOUR_AUTH_TOKEN>'
+              }
+            };
+
+            const req = https.request(url, options, (res) => {
+              let responseData = '';
+
+              res.on('data', (chunk) => {
+                responseData += chunk;
+              });
+
+              res.on('end', () => {
+                console.log('Response:', responseData);
+              });
+            });
+
+            req.on('error', (error) => {
+              console.error('Error:', error);
+            });
+
+            req.write(data);
+            req.end();
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+            url = "https://supersim.api.korewireless.com/v1/Sims"
+            data = { "Iccid": "89883070000123456789", "RegistrationCode": "H3LL0W0RLD" }
+            headers = {
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+            }
+
+            response = requests.post(url, data=data, headers=headers)
+
+            if response.status_code == 200:
+                print(response.json())
+            else:
+                print(f"Error: {response.status_code}, {response.text}")
+
       responses:
         '201':
           content:
@@ -3571,7 +3626,52 @@ paths:
       summary: List Super SIMs
       description: Retrieve a list of Super SIMs from your account.
       tags:
-      - SupersimV1Sim
+        - SupersimV1Sim
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L "https://supersim.api.korewireless.com/v1/Sims" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            const https = require('https');
+            const url = "https://supersim.api.korewireless.com/v1/Sims";
+            
+            const options = {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer <YOUR_AUTH_TOKEN>`,
+              },
+            };
+
+            const req = https.request(url, options, (res) => {
+              let data = '';
+              res.on('data', (chunk) => {
+                data += chunk;
+              });
+              res.on('end', () => {
+                console.log("Response:", JSON.parse(data));
+              });
+            });
+            req.on('error', (error) => {
+              console.error("Error:", error.message);
+            });
+            req.end();
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+            url = "https://supersim.api.korewireless.com/v1/Sims"
+            headers = {
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+            }
+            response = requests.get(url, headers=headers)
+
+            if response.ok:
+                print("Response:", response.json())
+            else:
+                print("Error:", response.status_code, response.text)
       parameters:
       - name: Status
         in: query
@@ -3808,6 +3908,50 @@ paths:
         schema:
           type: string
         required: true
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L "https://supersim.api.korewireless.com/v1/Sims/{Sid}" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>"   
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            const https = require('https');
+            const url = "https://supersim.api.korewireless.com/v1/Sims/<Sid>";
+            const options = {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer <YOUR_AUTH_TOKEN>'
+              }
+            };
+
+            https.get(url, options, (res) => {
+              let data = '';
+
+              res.on('data', (chunk) => {
+                data += chunk;
+              });
+
+              res.on('end', () => {
+                console.log('Response:', data);
+              });
+            }).on('error', (err) => {
+              console.error('Error:', err.message);
+            });
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+            url = "https://supersim.api.korewireless.com/v1/Sims/<Sid>"
+            headers = {
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+            }
+
+            response = requests.get(url, headers=headers)
+            if response.ok:
+                print("Response:", response.json())
+            else:
+                print("Error:", response.status_code, response.text)
       responses:
         '200':
           content:
@@ -3864,6 +4008,63 @@ paths:
         account.
       tags:
       - SupersimV1Sim
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L -X POST "https://supersim.api.korewireless.com/v1/Sims/<Sid>" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>" --header "Content-Type: application/x-www-form-urlencoded" --header "Accept: application/json" --data-urlencode "UniqueName=<NEW_UNIQUE_NAME>" --data-urlencode "CallbackUrl=<YOUR_CALLBACK_URL>" --data-urlencode "CallbackMethod=<GET_OR_POST>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            const https = require('https');
+            const { URLSearchParams } = require('url');
+            const url = "https://supersim.api.korewireless.com/v1/Sims/<Sid>";
+            const data = new URLSearchParams({ 
+              UniqueName: "<NEW_UNIQUE_NAME>", 
+              CallbackUrl : "<YOUR_CALLBACK_URL>", 
+              CallbackMethod : "<GET_OR_POST>" }).toString();
+            const options = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Length': Buffer.byteLength(data),
+                'Authorization': 'Bearer <YOUR_AUTH_TOKEN>'
+              }
+            };
+
+            const req = https.request(url, options, (res) => {
+              let responseData = '';
+              res.on('data', (chunk) => {
+                responseData += chunk;
+              });
+              res.on('end', () => {
+                console.log('Response:', responseData);
+              });
+            });
+
+            req.on('error', (error) => {
+              console.error('Error:', error);
+            });
+
+            req.write(data);
+            req.end();
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+            url = "https://supersim.api.korewireless.com/v1/Sims/<Sid>"
+            data = { 
+                "UniqueName": "<NEW_UNIQUE_NAME>", 
+                "CallbackUrl" : "<YOUR_CALLBACK_URL>", 
+                "CallbackMethod" : "<GET_OR_POST>" }
+            headers = {
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+            }
+            response = requests.post(url, data=data, headers=headers)
+            if response.status_code == 200:
+                print(response.json())
+            else:
+                print(f"Error: {response.status_code}, {response.text}")
       parameters:
       - name: Sid
         in: path
@@ -4018,15 +4219,12 @@ paths:
               properties:
                 UniqueName:
                   type: string
-                  description: An application-defined string that uniquely identifies
-                    the resource. It can be used in place of the resource's `sid`
-                    in the URL to address the resource.
+                  description: An application-defined string that uniquely identifies the resource. It can be used in place of the resource's `sid` in the URL to address the resource.
                 Status:
                   $ref: '#/components/schemas/sim_enum_status_update'
                 Fleet:
                   type: string
-                  description: The SID or unique name of the Fleet to which the SIM
-                    resource should be assigned.
+                  description: The SID or unique name of the Fleet to which the SIM resource should be assigned.
                 CallbackUrl:
                   type: string
                   format: uri
