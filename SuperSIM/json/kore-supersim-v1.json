@@ -4611,12 +4611,12 @@
           {
             "lang": "NodeJs",
             "label": "NodeJs",
-            "source": "const https = require('https');\nconst { URLSearchParams } = require('url');\nconst url = \"https://supersim.api.korewireless.com/v1/Sims\";\n\nconst data = new URLSearchParams({ Iccid: \"89883070000123456789\", RegistrationCode: \"H3LL0W0RLD\" }).toString();\n\nconst options = {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/x-www-form-urlencoded',\n    'Content-Length': Buffer.byteLength(data),\n    'Authorization': 'Bearer <YOUR_AUTH_TOKEN>'\n  }\n};\n\nconst req = https.request(url, options, (res) => {\n  let responseData = '';\n\n  res.on('data', (chunk) => {\n    responseData += chunk;\n  });\n\n  res.on('end', () => {\n    console.log('Response:', responseData);\n  });\n});\n\nreq.on('error', (error) => {\n  console.error('Error:', error);\n});\n\nreq.write(data);\nreq.end();\n"
+            "source": "import { URLSearchParams } from \"url\";\nconst data = new URLSearchParams({\n    Iccid: '89883070000123456789',\n    RegistrationCode: 'H3LL0W0RLD'\n  });\nconst response = await fetch('https://supersim.api.korewireless.com/v1/Sims', {\n    method: 'POST',\n    headers: {\n      \"Content-Type\": \"application/x-www-form-urlencoded\",\n      \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    },\n    body: data.toString()\n});\nconst resp = await response.json();\nconsole.log(resp);\n"
           },
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nurl = \"https://supersim.api.korewireless.com/v1/Sims\"\ndata = { \"Iccid\": \"89883070000123456789\", \"RegistrationCode\": \"H3LL0W0RLD\" }\nheaders = {\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n}\n\nresponse = requests.post(url, data=data, headers=headers)\n\nif response.status_code == 200:\n    print(response.json())\nelse:\n    print(f\"Error: {response.status_code}, {response.text}\")\n"
+            "source": "import requests\nresponse = requests.post(\n    \"https://supersim.api.korewireless.com/v1/Sims\",\n    headers={\"Content-Type\":\"application/x-www-form-urlencoded\",\"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>},\n    data={\"Iccid\":\"89883070000123456789\", \"RegistrationCode\":\"H3LL0W0RLD\"}\n)\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "responses": {
@@ -4740,12 +4740,12 @@
           {
             "lang": "NodeJs",
             "label": "NodeJs",
-            "source": "const https = require('https');\nconst url = \"https://supersim.api.korewireless.com/v1/Sims\";\n\nconst options = {\n  method: 'GET',\n  headers: {\n    'Authorization': `Bearer <YOUR_AUTH_TOKEN>`,\n  },\n};\n\nconst req = https.request(url, options, (res) => {\n  let data = '';\n  res.on('data', (chunk) => {\n    data += chunk;\n  });\n  res.on('end', () => {\n    console.log(\"Response:\", JSON.parse(data));\n  });\n});\nreq.on('error', (error) => {\n  console.error(\"Error:\", error.message);\n});\nreq.end();\n"
+            "source": "import { URLSearchParams } from \"url\";\nconst response = await fetch('https://supersim.api.korewireless.com/v1/Sims', {\n    method: 'GET',\n    headers: {\n      \"Content-Type\": \"application/x-www-form-urlencoded\",\n      \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    }\n});\nconst resp = await response.json();\nconsole.log(resp);\n"
           },
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nurl = \"https://supersim.api.korewireless.com/v1/Sims\"\nheaders = {\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n}\nresponse = requests.get(url, headers=headers)\n\nif response.ok:\n    print(\"Response:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.text)\n"
+            "source": "import requests\nresponse = requests.get(\"https://supersim.api.korewireless.com/v1/Sims\", headers={\"Content-Type\":\"application/x-www-form-urlencoded\",\"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"})\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "parameters": [
@@ -5092,12 +5092,12 @@
           {
             "lang": "NodeJs",
             "label": "NodeJs",
-            "source": "const https = require('https');\nconst url = \"https://supersim.api.korewireless.com/v1/Sims/<Sid>\";\nconst options = {\n  method: 'GET',\n  headers: {\n    'Authorization': 'Bearer <YOUR_AUTH_TOKEN>'\n  }\n};\n\nhttps.get(url, options, (res) => {\n  let data = '';\n\n  res.on('data', (chunk) => {\n    data += chunk;\n  });\n\n  res.on('end', () => {\n    console.log('Response:', data);\n  });\n}).on('error', (err) => {\n  console.error('Error:', err.message);\n});\n"
+            "source": "import { URLSearchParams } from \"url\";\nconst response = await fetch('https://supersim.api.korewireless.com/v1/Sims/<Sid>', {\n    method: 'GET',\n    headers: {\n      \"Content-Type\": \"application/x-www-form-urlencoded\",\n      \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    }\n});\nconst resp = await response.json();\nconsole.log(resp);\n"
           },
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nurl = \"https://supersim.api.korewireless.com/v1/Sims/<Sid>\"\nheaders = {\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n}\n\nresponse = requests.get(url, headers=headers)\nif response.ok:\n    print(\"Response:\", response.json())\nelse:\n    print(\"Error:\", response.status_code, response.text)\n"
+            "source": "import requests\nresponse = requests.get(\"https://supersim.api.korewireless.com/v1/Sims/<Sid>\", headers={\"Content-Type\":\"application/x-www-form-urlencoded\",\"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"})\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "responses": {
