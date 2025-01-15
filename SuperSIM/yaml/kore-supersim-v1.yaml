@@ -2130,18 +2130,6 @@ paths:
       tags:
       - SupersimV1Fleet
       x-codeSamples:
-        - lang: 'cURL'
-          label: cURL
-          soure: |
-            curl -X POST "https://supersim.api.korewireless.com/v1/Fleets/<Sid>" \
-              -H "Content-Type: application/x-www-form-urlencoded" \
-              -H "Authorization: Bearer <YOUR_AUTH_TOKEN>" \
-              --data-urlencode "UniqueName=<NEW_FLEET_NAME>" \
-              --data-urlencode "DataLimit=<NEW_DATA_LIMIT>" \ 
-              --data-urlencode "SmsCommandsMethod=<GET_OR_POST>" \
-              --data-urlencode "SmsCommandsUrl=<NEW_CALLBACK_URL>" \
-              --data-urlencode "IpCommandsMethod=<GET_OR_POST>" \ 
-              --data-urlencode "IpCommandsUrl=<NEW_CALLBACK_URL>"
         - lang: 'NodeJs'
           label: NodeJs
           source: |
@@ -2190,6 +2178,10 @@ paths:
             });
             const resp = await response.json();
             console.log(resp);  
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -X POST "https://supersim.api.korewireless.com/v1/Fleets/<Sid>" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <YOUR_AUTH_TOKEN>" --data-urlencode "UniqueName=<NEW_UNIQUE_NAME>" --data-urlencode "DataLimit=<NEW_DATA_LIMIT>" --data-urlencode "SmsCommandsMethod=<GET_OR_POST>" --data-urlencode "SmsCommandsUrl=<NEW_CALLBACK_URL>" --data-urlencode "IpCommandsMethod=<GET_OR_POST>" --data-urlencode "IpCommandsUrl=<NEW_CALLBACK_URL>" 
       parameters:
       - name: Sid
         in: path
