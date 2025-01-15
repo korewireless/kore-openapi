@@ -1656,6 +1656,62 @@ paths:
       description: Create a Fleet
       tags:
       - SupersimV1Fleet
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -X POST "https://supersim.api.korewireless.com/v1/Fleets" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <YOUR_AUTH_TOKEN>" --data-urlencode "UniqueName=<NEW_FLEET_NAME>" --data-urlencode "DataEnabled=true" --data-urlencode "DataLimit=500" --data-urlencode "SmsCommandsEnabled=true" --data-urlencode "SmsCommandsMethod=<GET_OR_POST>" --data-urlencode "SmsCommandsUrl=<YOUR_CALLBACK_URL>" --data-urlencode "IpCommandsMethod=<GET_OR_POST>" --data-urlencode "IpCommandsUrl=<YOUR_CALLBACK_URL>" --data-urlencode "NetworkAccessProfile=<NETWORK_ACCESS_PROFILE_SID_OR_UNIQUENAME>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+
+            const data = new URLSearchParams({
+                "UniqueName": "<NEW_FLEET_NAME>",
+                "DataEnabled": "true",
+                "DataLimit": "500",
+                "SmsCommandsEnabled": "true",
+                "SmsCommandsMethod": "<GET_OR_POST>",
+                "SmsCommandsUrl": "<YOUR_CALLBACK_URL>",
+                "IpCommandsMethod": "<GET_OR_POST>",
+                "IpCommandsUrl": "<YOUR_CALLBACK_URL>",
+                "NetworkAccessProfile": "<NETWORK_ACCESS_PROFILE_SID_OR_UNIQUENAME>"
+              });
+
+            const response = await fetch('https://supersim.api.korewireless.com/v1/Fleets', {
+                method: 'POST',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                },
+                body: data.toString()
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+            response = requests.post(
+                "https://supersim.api.korewireless.com/v1/Fleets",
+                headers={
+                        "Content-Type":"application/x-www-form-urlencoded",
+                        "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                    },
+                data={
+                        "UniqueName":"<NEW_FLEET_NAME>",
+                        "DataEnabled":"true",
+                        "DataLimit":"500",
+                        "SmsCommandsEnabled":"true",
+                        "SmsCommandsMethod":"<GET_OR_POST>",
+                        "SmsCommandsUrl":"<YOUR_CALLBACK_URL>",
+                        "IpCommandsMethod":"<GET_OR_POST>",
+                        "IpCommandsUrl":"<YOUR_CALLBACK_URL>",
+                        "NetworkAccessProfile":"<NETWORK_ACCESS_PROFILE_SID_OR_UNIQUENAME>"
+                    }
+            )
+            resp = response.json()
+            print(resp)
       responses:
         '201':
           content:
@@ -1791,6 +1847,42 @@ paths:
       description: Retrieve a list of Fleets from your account.
       tags:
       - SupersimV1Fleet
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L "https://supersim.api.korewireless.com/v1/Fleets?Page=1&PageSize=1" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+
+            const url = "https://supersim.api.korewireless.com/v1/Fleets";
+            const params = new URLSearchParams({ Page: "1", PageSize: "1" });
+
+            const response = await fetch(`${url}?${params.toString()}`, {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+
+            response = requests.get(
+              "https://supersim.api.korewireless.com/v1/Fleets", 
+              headers={
+                "Content-Type":"application/x-www-form-urlencoded",
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                },
+            params={"Page": "1", "PageSize": "1"})
+            resp = response.json()
+            print(resp)
       parameters:
       - name: NetworkAccessProfile
         in: query
@@ -1939,6 +2031,39 @@ paths:
       description: Fetch a Fleet instance from your account.
       tags:
       - SupersimV1Fleet
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L "https://supersim.api.korewireless.com/v1/Fleets/<Sid>" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+
+            const response = await fetch('https://supersim.api.korewireless.com/v1/Fleets/<Sid>', {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+
+            response = requests.get(
+                "https://supersim.api.korewireless.com/v1/Fleets/<Sid>", 
+                headers={
+                        "Content-Type":"application/x-www-form-urlencoded",
+                        "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                        }
+                )
+            resp = response.json()
+            print(resp)  
       parameters:
       - name: Sid
         in: path
@@ -2004,6 +2129,59 @@ paths:
         your account.
       tags:
       - SupersimV1Fleet
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          soure: |
+            curl -X POST "https://supersim.api.korewireless.com/v1/Fleets/<Sid>" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <YOUR_AUTH_TOKEN>" --data-urlencode "UniqueName=<NEW_FLEET_NAME>" --data-urlencode "DataLimit=<NEW_DATA_LIMIT>" --data-urlencode "SmsCommandsMethod=<GET_OR_POST>" --data-urlencode "SmsCommandsUrl=<NEW_CALLBACK_URL>" --data-urlencode "IpCommandsMethod=<GET_OR_POST>" --data-urlencode "IpCommandsUrl=<NEW_CALLBACK_URL>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+
+            const data = new URLSearchParams({
+                "UniqueName": "<NEW_UNIQUE_NAME>",
+                "DataLimit": "<NEW_DATA_LIMIT>",
+                "SmsCommandsMethod": "<GET_OR_POST>",
+                "SmsCommandsUrl": "<NEW_CALLBACK_URL>",
+                "IpCommandsMethod": "<GET_OR_POST>",
+                "IpCommandsUrl": "<NEW_CALLBACK_URL>"
+              });
+              
+            const response = await fetch("https://supersim.api.korewireless.com/v1/Fleets/<Sid>", {    
+                method: 'POST',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                },
+                body: data.toString()
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import { URLSearchParams } from "url";
+
+            const data = new URLSearchParams({
+                "UniqueName": "<NEW_UNIQUE_NAME>",
+                "DataLimit": "<NEW_DATA_LIMIT>",
+                "SmsCommandsMethod": "<GET_OR_POST>",
+                "SmsCommandsUrl": "<NEW_CALLBACK_URL>",
+                "IpCommandsMethod": "<GET_OR_POST>",
+                "IpCommandsUrl": "<NEW_CALLBACK_URL>"
+              });
+              
+            const response = await fetch("https://supersim.api.korewireless.com/v1/Fleets/<Sid>", {    
+                method: 'POST',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                },
+                body: data.toString()
+            });
+            const resp = await response.json();
+            console.log(resp);  
       parameters:
       - name: Sid
         in: path
