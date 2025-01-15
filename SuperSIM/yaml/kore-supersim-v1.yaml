@@ -1300,8 +1300,14 @@ paths:
           source: |
             import requests
 
-            response = requests.get("https://supersim.api.korewireless.com/v1/ESimProfiles", headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN"},
-            params={"Status": "installed"})
+            response = requests.get(
+              "https://supersim.api.korewireless.com/v1/ESimProfiles", 
+              headers={
+                "Content-Type":"application/x-www-form-urlencoded",
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN"},
+              params={
+                "Status": "installed"}
+            )
             resp = response.json()
             print(resp)
       parameters:
@@ -1552,7 +1558,12 @@ paths:
           label: Python
           source: |
             import requests
-            response = requests.get("https://supersim.api.korewireless.com/v1/ESimProfiles/<Sid>", headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN>"})
+            response = requests.get(
+              "https://supersim.api.korewireless.com/v1/ESimProfiles/<Sid>", 
+              headers={
+                "Content-Type":"application/x-www-form-urlencoded",
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"}
+            )
             resp = response.json()
             print(resp)
       parameters:

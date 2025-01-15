@@ -1426,7 +1426,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\n\nresponse = requests.get(\"https://supersim.api.korewireless.com/v1/ESimProfiles\", headers={\"Content-Type\":\"application/x-www-form-urlencoded\",\"Authorization\": \"Bearer <YOUR_AUTH_TOKEN\"},\nparams={\"Status\": \"installed\"})\nresp = response.json()\nprint(resp)\n"
+            "source": "import requests\n\nresponse = requests.get(\n  \"https://supersim.api.korewireless.com/v1/ESimProfiles\", \n  headers={\n    \"Content-Type\":\"application/x-www-form-urlencoded\",\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN\"},\n  params={\n    \"Status\": \"installed\"}\n)\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "parameters": [
@@ -1755,7 +1755,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nresponse = requests.get(\"https://supersim.api.korewireless.com/v1/ESimProfiles/<Sid>\", headers={\"Content-Type\":\"application/x-www-form-urlencoded\",\"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"})\nresp = response.json()\nprint(resp)\n"
+            "source": "import requests\nresponse = requests.get(\n  \"https://supersim.api.korewireless.com/v1/ESimProfiles/<Sid>\", \n  headers={\n    \"Content-Type\":\"application/x-www-form-urlencoded\",\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"}\n)\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "parameters": [
