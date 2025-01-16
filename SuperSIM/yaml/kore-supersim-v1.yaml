@@ -3073,8 +3073,16 @@ paths:
           source: |
             import requests
 
-            response = requests.get("https://supersim.api.korewireless.com/v1/NetworkAccessProfiles", headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN>"},
-            params={"Page": "1", "PageSize": "1"})
+            response = requests.get("https://supersim.api.korewireless.com/v1/NetworkAccessProfiles", 
+              headers={
+                "Content-Type":"application/x-www-form-urlencoded",
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                },
+              params={
+                "Page": "1", 
+                "PageSize": "1"
+                }
+            )
             resp = response.json()
             print(resp)
       parameters:
