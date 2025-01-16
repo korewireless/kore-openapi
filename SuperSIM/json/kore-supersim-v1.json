@@ -1001,7 +1001,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nresponse = requests.get(\n  \"https://supersim.api.korewireless.com/v1/Sims/<Sid>/BillingPeriods\", \n  headers={\n    \"Content-Type\":\"application/x-www-form-urlencoded\",\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n  }\n)\nresp = response.json()\nprint(resp)\n"
+            "source": "import requests\n\nresponse = requests.get(\n  \"https://supersim.api.korewireless.com/v1/Sims/<Sid>/BillingPeriods\", \n  headers={\n    \"Content-Type\":\"application/x-www-form-urlencoded\",\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n  }\n)\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "parameters": [
@@ -1240,7 +1240,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nresponse = requests.post(\"https://supersim.api.korewireless.com/v1/ESimProfiles\",\n    headers={\"Content-Type\":\"application/x-www-form-urlencoded\",\"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"},\n    data={\"Eid\":\"<YOUR_EID>\"}\n)\nprint(response.text)\n"
+            "source": "import requests\n\nresponse = requests.post(\"https://supersim.api.korewireless.com/v1/ESimProfiles\",\n    headers={\"Content-Type\":\"application/x-www-form-urlencoded\",\"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"},\n    data={\"Eid\":\"<YOUR_EID>\"}\n)\nprint(response.text)\n"
           }
         ],
         "responses": {
@@ -1755,7 +1755,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nresponse = requests.get(\n  \"https://supersim.api.korewireless.com/v1/ESimProfiles/<Sid>\", \n  headers={\n    \"Content-Type\":\"application/x-www-form-urlencoded\",\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"}\n)\nresp = response.json()\nprint(resp)\n"
+            "source": "import requests\n\nresponse = requests.get(\n  \"https://supersim.api.korewireless.com/v1/ESimProfiles/<Sid>\", \n  headers={\n    \"Content-Type\":\"application/x-www-form-urlencoded\",\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"}\n)\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "parameters": [
@@ -1897,7 +1897,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nresponse = requests.post(\n    \"https://supersim.api.korewireless.com/v1/Fleets\",\n    headers={\n            \"Content-Type\":\"application/x-www-form-urlencoded\",\n            \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n        },\n    data={\n            \"UniqueName\":\"<NEW_FLEET_NAME>\",\n            \"DataEnabled\":\"true\",\n            \"DataLimit\":\"500\",\n            \"SmsCommandsEnabled\":\"true\",\n            \"SmsCommandsMethod\":\"<GET_OR_POST>\",\n            \"SmsCommandsUrl\":\"<YOUR_CALLBACK_URL>\",\n            \"IpCommandsMethod\":\"<GET_OR_POST>\",\n            \"IpCommandsUrl\":\"<YOUR_CALLBACK_URL>\",\n            \"NetworkAccessProfile\":\"<NETWORK_ACCESS_PROFILE_SID_OR_UNIQUENAME>\"\n        }\n)\nresp = response.json()\nprint(resp)\n"
+            "source": "import requests\n\nresponse = requests.post(\n    \"https://supersim.api.korewireless.com/v1/Fleets\",\n    headers={\n            \"Content-Type\":\"application/x-www-form-urlencoded\",\n            \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n        },\n    data={\n            \"UniqueName\":\"<NEW_FLEET_NAME>\",\n            \"DataEnabled\":\"true\",\n            \"DataLimit\":\"500\",\n            \"SmsCommandsEnabled\":\"true\",\n            \"SmsCommandsMethod\":\"<GET_OR_POST>\",\n            \"SmsCommandsUrl\":\"<YOUR_CALLBACK_URL>\",\n            \"IpCommandsMethod\":\"<GET_OR_POST>\",\n            \"IpCommandsUrl\":\"<YOUR_CALLBACK_URL>\",\n            \"NetworkAccessProfile\":\"<NETWORK_ACCESS_PROFILE_SID_OR_UNIQUENAME>\"\n        }\n)\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "responses": {
@@ -3224,7 +3224,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\n\nresponse = requests.get(\"https://supersim.api.korewireless.com/v1/Networks\", headers={\"Content-Type\":\"application/x-www-form-urlencoded\",\"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"},\nparams={\"Page\": \"1\", \"PageSize\": \"1\"})\nresp = response.json()\nprint(resp)\n"
+            "source": "import requests\n\nresponse = requests.get(\n  \"https://supersim.api.korewireless.com/v1/Networks\", \n  headers={\n    \"Content-Type\":\"application/x-www-form-urlencoded\",\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n  },\n  params={\n    \"Page\": \"1\", \n    \"PageSize\": \"1\"\n  }\n)\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "parameters": [
@@ -3490,7 +3490,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nresponse = requests.post(\n    \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles\",\n    headers={\n            \"Content-Type\":\"application/x-www-form-urlencoded\",\n            \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n        },\n    data={\n            \"UniqueName\":\"<UNIQUE_NAME>\",\n            \"Networks\": [\"<NETWORK_SID>\",\"<NETWORK_SID>\"]\n        }\n)\nresp = response.json()\nprint(resp)\n"
+            "source": "import requests\n\nresponse = requests.post(\n    \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles\",\n    headers={\n            \"Content-Type\":\"application/x-www-form-urlencoded\",\n            \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n        },\n    data={\n            \"UniqueName\":\"<UNIQUE_NAME>\",\n            \"Networks\": [\"<NETWORK_SID>\",\"<NETWORK_SID>\"]\n        }\n)\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "responses": {
@@ -3948,7 +3948,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nresponse = requests.post(\n    \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<Sid>\",\n    headers={\n            \"Content-Type\":\"application/x-www-form-urlencoded\",\n            \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n        },\n    data={\n            \"UniqueName\":\"<NEW_UNIQUE_NAME>\"\n        }\n)\nresp = response.json()\nprint(resp)\n"
+            "source": "import requests\n\nresponse = requests.post(\n    \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<Sid>\",\n    headers={\n            \"Content-Type\":\"application/x-www-form-urlencoded\",\n            \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n        },\n    data={\n            \"UniqueName\":\"<NEW_UNIQUE_NAME>\"\n        }\n)\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "parameters": [
@@ -4276,7 +4276,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nresponse = requests.post(\n    \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks\",\n    headers={\n        \"Content-Type\":\"application/x-www-form-urlencoded\",\n        \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    },\n    data={\n        \"Network\": \"<NETWORK_SID>\"\n    }\n)\nresp = response.json()\nprint(resp)\n"
+            "source": "import requests\n\nresponse = requests.post(\n    \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks\",\n    headers={\n        \"Content-Type\":\"application/x-www-form-urlencoded\",\n        \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    },\n    data={\n        \"Network\": \"<NETWORK_SID>\"\n    }\n)\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "parameters": [
@@ -4426,7 +4426,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nresponse = requests.delete(\n    \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID>\",\n    headers={\n        \"Content-Type\":\"application/x-www-form-urlencoded\",\n        \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    }\n)\nif response.status_code == 204:\n    print(\"Network sid deleted successfully from network access profile .\")\nelse:\n    print(f\"Failed to delete network sid from network access profile: {response.status_code} {response.reason}\")\n"
+            "source": "import requests\n\nresponse = requests.delete(\n    \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID>\",\n    headers={\n        \"Content-Type\":\"application/x-www-form-urlencoded\",\n        \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    }\n)\nif response.status_code == 204:\n    print(\"Network sid deleted successfully from network access profile .\")\nelse:\n    print(f\"Failed to delete network sid from network access profile: {response.status_code} {response.reason}\")\n"
           }
         ],
         "parameters": [
@@ -4605,6 +4605,23 @@
         "description": "Retrieve a list of Settings Updates.",
         "tags": [
           "SupersimV1SettingsUpdate"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -L \"https://supersim.api.korewireless.com/v1/SettingsUpdates?Status=successful&Page=1&PageSize=10\" --header \"Authorization: Bearer <YOUR_AUTH_TOKEN>\" \n"
+          },
+          {
+            "lang": "NodeJs",
+            "label": "NodeJs",
+            "source": "import { URLSearchParams } from \"url\";\n\nconst url = \"https://supersim.api.korewireless.com/v1/SettingsUpdates\";\nconst params = new URLSearchParams({ Status: \"successful\", Page: \"1\", PageSize: \"10\" });\n\nconst response = await fetch(`${url}?${params.toString()}`, {\n    method: 'GET',\n    headers: {\n      \"Content-Type\": \"application/x-www-form-urlencoded\",\n      \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    }\n});\nconst resp = await response.json();\nconsole.log(resp);\n"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\n\nresponse = requests.get(\n  \"https://supersim.api.korewireless.com/v1/SettingsUpdates\", \n  headers={\n    \"Content-Type\":\"application/x-www-form-urlencoded\",\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n  },\n  params={\n    \"Status\":\"successful\",\n    \"Page\": \"1\", \n    \"PageSize\": \"10\"\n    }\n)\nresp = response.json()\nprint(resp)\n"
+          }
         ],
         "parameters": [
           {
@@ -4922,7 +4939,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nresponse = requests.post(\n    \"https://supersim.api.korewireless.com/v1/Sims\",\n    headers={\"Content-Type\":\"application/x-www-form-urlencoded\",\"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>},\n    data={\"Iccid\":\"89883070000123456789\", \"RegistrationCode\":\"H3LL0W0RLD\"}\n)\nresp = response.json()\nprint(resp)\n"
+            "source": "import requests\n\nresponse = requests.post(\n    \"https://supersim.api.korewireless.com/v1/Sims\",\n    headers={\n      \"Content-Type\":\"application/x-www-form-urlencoded\",\n      \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\n    },\n    data={\n      \"Iccid\":\"89883070000123456789\", \n      \"RegistrationCode\":\"H3LL0W0RLD\"\n    }\n)\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "responses": {
@@ -5051,7 +5068,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nresponse = requests.get(\"https://supersim.api.korewireless.com/v1/Sims\", headers={\"Content-Type\":\"application/x-www-form-urlencoded\",\"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"})\nresp = response.json()\nprint(resp)\n"
+            "source": "import requests\n\nresponse = requests.get(\n  \"https://supersim.api.korewireless.com/v1/Sims\", \n  headers={\n    \"Content-Type\":\"application/x-www-form-urlencoded\",\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n  }\n)\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "parameters": [
@@ -5403,7 +5420,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nresponse = requests.get(\"https://supersim.api.korewireless.com/v1/Sims/<Sid>\", headers={\"Content-Type\":\"application/x-www-form-urlencoded\",\"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"})\nresp = response.json()\nprint(resp)\n"
+            "source": "import requests\n\nresponse = requests.get(\n  \"https://supersim.api.korewireless.com/v1/Sims/<Sid>\", \n  headers={\n    \"Content-Type\":\"application/x-www-form-urlencoded\",\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n  }\n)\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "responses": {
@@ -5500,7 +5517,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\nurl = \"https://supersim.api.korewireless.com/v1/Sims/<Sid>\"\ndata = { \n    \"UniqueName\": \"<NEW_UNIQUE_NAME>\", \n    \"CallbackUrl\" : \"<YOUR_CALLBACK_URL>\", \n    \"CallbackMethod\" : \"<GET_OR_POST>\" }\nheaders = {\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n}\nresponse = requests.post(url, data=data, headers=headers)\nif response.status_code == 200:\n    print(response.json())\nelse:\n    print(f\"Error: {response.status_code}, {response.text}\")\n"
+            "source": "import requests\n\nurl = \"https://supersim.api.korewireless.com/v1/Sims/<Sid>\"\ndata = { \n    \"UniqueName\": \"<NEW_UNIQUE_NAME>\", \n    \"CallbackUrl\" : \"<YOUR_CALLBACK_URL>\", \n    \"CallbackMethod\" : \"<GET_OR_POST>\"}\nheaders = {\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"}\nresponse = requests.post(url, data=data, headers=headers)\nif response.status_code == 200:\n    print(response.json())\nelse:\n    print(f\"Error: {response.status_code}, {response.text}\")\n"
           }
         ],
         "parameters": [
