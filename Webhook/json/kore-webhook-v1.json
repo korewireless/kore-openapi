@@ -1,0 +1,1472 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Webhook API",
+    "description": "API for creating, retrieving, and modifying Webhook.",
+    "version": "1.0.0"
+  },
+  "security": [
+    {
+      "LambdaTokenAuthorizer": []
+    },
+    {
+      "api_key": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Owner",
+      "x-amazon-apigateway-tag-value": "Webhook"
+    }
+  ],
+  "paths": {
+    "/v1/secrets": {
+      "post": {
+        "summary": "Create a new secret",
+        "description": "Creates a new secret with associated data.",
+        "operationId": "createSecret",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "i-kore-auth-account",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "type": "string",
+                    "description": "A user-friendly name for the secret."
+                  }
+                },
+                "required": [
+                  "Name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Secret created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SecretCreated"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-request-validator": "Validate body, query string parameters, and headers",
+        "x-amazon-apigateway-integration": {
+          "type": "http",
+          "httpMethod": "POST",
+          "uri": "${self:custom.${env:Type}.url}/v1/account/{k-account}/secrets",
+          "connectionType": "${self:custom.${env:Type}.vpc.connectionType}",
+          "connectionId": "${self:custom.${env:Type}.vpc.connectionId}",
+          "passthroughBehavior": "when_no_match",
+          "requestParameters": {
+            "integration.request.header.Accept": "method.request.header.Accept",
+            "integration.request.header.Authorization": "method.request.header.Authorization",
+            "integration.request.header.Content-Type": "method.request.header.Content-Type",
+            "integration.request.path.k-account": "method.request.header.i-kore-auth-account"
+          },
+          "requestTemplates": {
+            "application/json": "#set($context.requestOverride.header.source='publicapi') #set($context.requestOverride.header.clientrequestid=$context.requestId) #set($inputJson = $input.path('$')) #set($inputJson.id=\"\") #set($inputJson.account_type= \"kore\") #set($inputJson.user_email= $input.params('user-email')) $input.json('$')  \n"
+          },
+          "responses": {
+            "201": {
+              "statusCode": "201",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "400": {
+              "statusCode": "400",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "401": {
+              "statusCode": "401",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "403": {
+              "statusCode": "403",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "404": {
+              "statusCode": "404",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "405": {
+              "statusCode": "405",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "5\\d{2}": {
+              "statusCode": "500",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve a list of secrets",
+        "description": "Retrieves a list of secrets, optionally filtered by status.",
+        "operationId": "getSecrets",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter secrets by their status.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page_number",
+            "in": "query",
+            "description": "Filter that indicates the current pagination index of the response",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Filter that indicates the total number of records included in the response.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "i-kore-auth-account",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of secrets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedSecretResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-request-validator": "Validate body, query string parameters, and headers",
+        "x-amazon-apigateway-integration": {
+          "type": "http",
+          "httpMethod": "GET",
+          "uri": "${self:custom.${env:Type}.url}/v1/account/{k-account}/secrets",
+          "connectionType": "${self:custom.${env:Type}.vpc.connectionType}",
+          "connectionId": "${self:custom.${env:Type}.vpc.connectionId}",
+          "passthroughBehavior": "when_no_match",
+          "requestParameters": {
+            "integration.request.querystring.status": "method.request.querystring.status",
+            "integration.request.querystring.page_number": "method.request.querystring.page_number",
+            "integration.request.querystring.page_size": "method.request.querystring.page_size",
+            "integration.request.header.Accept": "method.request.header.Accept",
+            "integration.request.path.k-account": "method.request.header.i-kore-auth-account",
+            "integration.request.header.Authorization": "method.request.header.Authorization",
+            "integration.request.header.Content-Type": "method.request.header.Content-Type"
+          },
+          "responses": {
+            "200": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "400": {
+              "statusCode": "400",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "401": {
+              "statusCode": "401",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "403": {
+              "statusCode": "403",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "404": {
+              "statusCode": "404",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "405": {
+              "statusCode": "405",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "5\\d{2}": {
+              "statusCode": "500",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          }
+        }
+      },
+      "options": {
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {}
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET,PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date, Authorization,X-Api-Key,x-mock-response-id,X-Amz-Security-Token ,tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/v1/secrets/{id}": {
+      "patch": {
+        "summary": "Modify an existing secret",
+        "description": "Updates the details of an existing secret specified by secret`id`.",
+        "operationId": "modifySecret",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The unique identifier of the secret to be updated.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "i-kore-auth-account",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "type": "string",
+                    "description": "A user-friendly name for the secret."
+                  },
+                  "Status": {
+                    "type": "string",
+                    "description": "The status of the secret."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Secret updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SecretResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-request-validator": "Validate body, query string parameters, and headers",
+        "x-amazon-apigateway-integration": {
+          "type": "http",
+          "httpMethod": "PATCH",
+          "uri": "${self:custom.${env:Type}.url}/v1/account/{k-account}/secrets/{id}",
+          "connectionType": "${self:custom.${env:Type}.vpc.connectionType}",
+          "connectionId": "${self:custom.${env:Type}.vpc.connectionId}",
+          "passthroughBehavior": "when_no_match",
+          "requestParameters": {
+            "integration.request.path.id": "method.request.path.id",
+            "integration.request.header.Accept": "method.request.header.Accept",
+            "integration.request.header.Authorization": "method.request.header.Authorization",
+            "integration.request.header.Content-Type": "method.request.header.Content-Type",
+            "integration.request.path.k-account": "method.request.header.i-kore-auth-account"
+          },
+          "requestTemplates": {
+            "application/json": "#set($context.requestOverride.header.source='publicapi') #set($context.requestOverride.header.clientrequestid=$context.requestId) #set($inputJson = $input.path('$')) #set($inputJson.id= $input.params('id')) #set($inputJson.account_type= \"kore\") #set($inputJson.user_email= $input.params('user-email')) $input.json('$')  \n"
+          },
+          "responses": {
+            "200": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "201": {
+              "statusCode": "201",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "400": {
+              "statusCode": "400",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "401": {
+              "statusCode": "401",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "403": {
+              "statusCode": "403",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "404": {
+              "statusCode": "404",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "405": {
+              "statusCode": "405",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            },
+            "5\\d{2}": {
+              "statusCode": "500",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET, PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          }
+        }
+      },
+      "options": {
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {}
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Credentials": "'true'",
+                "method.response.header.Access-Control-Allow-Methods": "'POST, GET,PATCH, DELETE, OPTIONS'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date, Authorization,X-Api-Key,x-mock-response-id,X-Amz-Security-Token ,tryittoken'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/{proxy+}": {
+      "x-amazon-apigateway-any-method": {
+        "responses": {
+          "404": {
+            "description": "404 response",
+            "content": {},
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "404": {
+              "statusCode": "404",
+              "responseTemplates": {
+                "application/json": "{\"code\": 30009, \"message\":\"Resource not found\", \"status\": 404, \"info\": \"http//docs.korewireless.com/errors/30009\"}"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 404}"
+          },
+          "passthroughBehavior": "when_no_templates",
+          "type": "mock"
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SecretCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "secret": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "secret",
+          "status",
+          "last_modified"
+        ]
+      },
+      "SecretResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "status",
+          "last_modified"
+        ]
+      },
+      "PaginatedSecretResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "active",
+                    "Pending"
+                  ]
+                },
+                "last_modified": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "meta_data": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer"
+              },
+              "page_size": {
+                "type": "integer"
+              },
+              "page_number": {
+                "type": "integer"
+              },
+              "previous_page_url": {
+                "type": "string"
+              },
+              "next_page_url": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": [
+          "data",
+          "meta_data"
+        ]
+      },
+      "ApiErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "code": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "info": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "x-api-key",
+        "in": "header"
+      },
+      "LambdaTokenAuthorizer": {
+        "type": "apiKey",
+        "name": "Unused",
+        "in": "header",
+        "x-amazon-apigateway-authtype": "custom",
+        "x-amazon-apigateway-authorizer": {
+          "authorizerUri": "arn:aws:apigateway:${env:AWS_REGION}:lambda:path/2015-03-31/functions/arn:aws:lambda:${env:AWS_REGION}:${env:TARGET_ACCOUNT_ID}:function:API-${env:ENV_NAME}-WebhookLambdaAuthorizer/invocations",
+          "authorizerResultTtlInSeconds": 300,
+          "identitySource": "method.request.header.Authorization, context.identity.sourceIp, context.path",
+          "type": "request"
+        }
+      }
+    }
+  },
+  "x-amazon-apigateway-api-key-source": "AUTHORIZER",
+  "x-amazon-apigateway-request-validators": {
+    "Validate body, query string parameters, and headers": {
+      "validateRequestParameters": true,
+      "validateRequestBody": true
+    }
+  },
+  "x-amazon-apigateway-gateway-responses": {
+    "DEFAULT_4XX": {
+      "responseTemplates": {
+        "application/json": "{\"code\": 30006, \"message\":$context.error.messageString, \"status\":400, \"info\": \"http//docs.korewireless.com/errors/30006\" }"
+      },
+      "responseParameters": {
+        "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type'"
+      }
+    },
+    "DEFAULT_5XX": {
+      "responseTemplates": {
+        "application/json": "{\"code\": 30008, \"message\":$context.error.messageString,  \"status\":500, \"info\": \"http//docs.korewireless.com/errors/30008\"}"
+      },
+      "responseParameters": {
+        "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type'"
+      }
+    },
+    "ACCESS_DENIED": {
+      "responseTemplates": {
+        "application/json": "{\n  \"code\": 30010, \n  \"message\":$context.error.messageString,\n  \"error\":\"$context.authorizer.customErrorMessage\",\n  \"status\":403,\n  \"info\": \"http//docs.korewireless.com/errors/30010\"\n }"
+      },
+      "responseParameters": {
+        "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type'"
+      }
+    },
+    "UNAUTHORIZED": {
+      "statusCode": 401,
+      "responseTemplates": {
+        "application/json": "{\n  \"code\": 30011, \n  \"message\":$context.error.messageString, \n  \"status\":401, \n  \"info\": \"http//docs.korewireless.com/errors/30011\"\n}"
+      },
+      "responseParameters": {
+        "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type'"
+      }
+    },
+    "BAD_REQUEST_BODY": {
+      "statusCode": 400,
+      "responseParameters": {
+        "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type'"
+      },
+      "responseTemplates": {
+        "application/json": "{\"code\": 30006, \"message\":$context.error.messageString , \"error\":\"$context.error.validationErrorString\", \"status\":400, \"info\": \"http//docs.korewireless.com/errors/30006\"}"
+      }
+    }
+  },
+  "x-amazon-apigateway-binary-media-types": [
+    "multipart/form-data",
+    "application/x-www-form-urlencoded"
+  ]
+}
