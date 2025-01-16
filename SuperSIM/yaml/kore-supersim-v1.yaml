@@ -3046,6 +3046,37 @@ paths:
       description: Retrieve a list of Network Access Profiles from your account.
       tags:
       - SupersimV1NetworkAccessProfile
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles?Page=1&PageSize=1" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+
+            const url = "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles";
+            const params = new URLSearchParams({ Page: "1", PageSize: "1" });
+
+            const response = await fetch(`${url}?${params.toString()}`, {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+
+            response = requests.get("https://supersim.api.korewireless.com/v1/NetworkAccessProfiles", headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN>"},
+            params={"Page": "1", "PageSize": "1"})
+            resp = response.json()
+            print(resp)
       parameters:
       - name: PageSize
         in: query
@@ -3392,37 +3423,6 @@ paths:
       description: Retrieve a list of Network Access Profile resource's Network resource.
       tags:
       - SupersimV1NetworkAccessProfileNetwork
-      x-codeSamples:
-        - lang: 'cURL'
-          label: cURL
-          source: |
-            curl -L "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles?Page=1&PageSize=1" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>"
-        - lang: 'NodeJs'
-          label: NodeJs
-          source: |
-            import { URLSearchParams } from "url";
-
-            const url = "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles";
-            const params = new URLSearchParams({ Page: "1", PageSize: "1" });
-
-            const response = await fetch(`${url}?${params.toString()}`, {
-                method: 'GET',
-                headers: {
-                  "Content-Type": "application/x-www-form-urlencoded",
-                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
-                }
-            });
-            const resp = await response.json();
-            console.log(resp);
-        - lang: 'Python'
-          label: Python
-          source: |
-            import requests
-
-            response = requests.get("https://supersim.api.korewireless.com/v1/NetworkAccessProfiles", headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN>"},
-            params={"Page": "1", "PageSize": "1"})
-            resp = response.json()
-            print(resp)
       parameters:
       - name: NetworkAccessProfileSid
         in: path
