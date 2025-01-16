@@ -3598,7 +3598,7 @@
           {
             "lang": "Python",
             "label": "Python",
-            "source": "import requests\n\nresponse = requests.get(\"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles\", headers={\"Content-Type\":\"application/x-www-form-urlencoded\",\"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"},\nparams={\"Page\": \"1\", \"PageSize\": \"1\"})\nresp = response.json()\nprint(resp)\n"
+            "source": "import requests\n\nresponse = requests.get(\"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles\", \n  headers={\n    \"Content-Type\":\"application/x-www-form-urlencoded\",\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    },\n  params={\n    \"Page\": \"1\", \n    \"PageSize\": \"1\"\n    }\n)\nresp = response.json()\nprint(resp)\n"
           }
         ],
         "parameters": [
