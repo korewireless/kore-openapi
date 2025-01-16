@@ -4042,6 +4042,23 @@
         "tags": [
           "SupersimV1NetworkAccessProfileNetwork"
         ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "labe": "cURL",
+            "source": "curl -L \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks?Page=1&PageSize=10\" --header \"Authorization: Bearer <YOUR_AUTH_TOKEN>\"\n"
+          },
+          {
+            "lang": "NodeJs",
+            "label": "NodeJs",
+            "source": "import { URLSearchParams } from \"url\";\n\nconst url = \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks\";\nconst params = new URLSearchParams({ Page: \"1\", PageSize: \"1\" });\n\nconst response = await fetch(`${url}?${params.toString()}`, {\n    method: 'GET',\n    headers: {\n      \"Content-Type\": \"application/x-www-form-urlencoded\",\n      \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    }\n});\nconst resp = await response.json();\nconsole.log(resp);\n"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\n\nresponse = requests.get(\n    \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks\", \n    headers={\n        \"Content-Type\":\"application/x-www-form-urlencoded\",\n        \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n        },\n    params={\n        \"Page\": \"1\", \"PageSize\": \"1\"\n        }\n)\nresp = response.json()\nprint(resp)\n"
+          }
+        ],
         "parameters": [
           {
             "name": "NetworkAccessProfileSid",
@@ -4211,6 +4228,23 @@
         "tags": [
           "SupersimV1NetworkAccessProfileNetwork"
         ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X POST \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<Sid>/Networks\" -H \"Content-Type: application/x-www-form-urlencoded\" -H \"Authorization: Bearer <YOUR_AUTH_TOKEN>\" --data-urlencode \"Networks=<NETWORK_SID>\"\n"
+          },
+          {
+            "lang": "NodeJs",
+            "label": "NodeJs",
+            "source": "import { URLSearchParams } from \"url\";\n\nconst data = new URLSearchParams({\n  \"Network\": \"<NETWORK_SID>\"\n});\nconst response = await fetch('https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks', {\n    method: 'POST',\n    headers: {\n      \"Content-Type\": \"application/x-www-form-urlencoded\",\n      \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    },\n    body: data.toString()\n});\nconst resp = await response.json();\nconsole.log(resp);\n"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\nresponse = requests.post(\n    \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks\",\n    headers={\n        \"Content-Type\":\"application/x-www-form-urlencoded\",\n        \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    },\n    data={\n        \"Network\": \"<NETWORK_SID>\"\n    }\n)\nresp = response.json()\nprint(resp)\n"
+          }
+        ],
         "parameters": [
           {
             "name": "NetworkAccessProfileSid",
@@ -4344,6 +4378,23 @@
         "tags": [
           "SupersimV1NetworkAccessProfileNetwork"
         ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -L -X DELETE \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID>\" --header \"Authorization: Bearer <YOUR_AUTH_TOKEN>\"\n"
+          },
+          {
+            "lang": "NodeJs",
+            "label": "NodeJs",
+            "source": "const response = await fetch('https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID', {\n  method: \"DELETE\",\n  headers: {\n    \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n  }\n});\nconsole.log(response);  \n"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\nresponse = requests.delete(\n    \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID>\",\n    headers={\n        \"Content-Type\":\"application/x-www-form-urlencoded\",\n        \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    }\n)\nif response.status_code == 204:\n    print(\"Network sid deleted successfully from network access profile .\")\nelse:\n    print(f\"Failed to delete network sid from network access profile: {response.status_code} {response.reason}\")\n"
+          }
+        ],
         "parameters": [
           {
             "name": "NetworkAccessProfileSid",
@@ -4386,6 +4437,23 @@
         "description": "Fetch a Network Access Profile resource's Network resource.",
         "tags": [
           "SupersimV1NetworkAccessProfileNetwork"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -L \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID>\" --header \"Authorization: Bearer <YOUR_AUTH_TOKEN>\"\n"
+          },
+          {
+            "lang": "NodeJs",
+            "label": "NodeJs",
+            "source": "import { URLSearchParams } from \"url\";\nconst response = await fetch('https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID>', {\n    method: 'GET',\n    headers: {\n      \"Content-Type\": \"application/x-www-form-urlencoded\",\n      \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    }\n});\nconst resp = await response.json();\nconsole.log(resp);\n"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\n\nresponse = requests.get(\n    \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID>\", \n    headers={\n            \"Content-Type\":\"application/x-www-form-urlencoded\",\n            \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n            }\n    )\nresp = response.json()\nprint(resp)\n"
+          }
         ],
         "parameters": [
           {

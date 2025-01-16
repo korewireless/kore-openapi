@@ -3431,6 +3431,45 @@ paths:
       description: Retrieve a list of Network Access Profile resource's Network resource.
       tags:
       - SupersimV1NetworkAccessProfileNetwork
+      x-codeSamples:
+        - lang: 'cURL'
+          labe: cURL
+          source: |
+            curl -L "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks?Page=1&PageSize=10" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>"
+        - lang: 'NodeJs'
+          label: NodeJs 
+          source: |
+            import { URLSearchParams } from "url";
+
+            const url = "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks";
+            const params = new URLSearchParams({ Page: "1", PageSize: "1" });
+
+            const response = await fetch(`${url}?${params.toString()}`, {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+
+            response = requests.get(
+                "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks", 
+                headers={
+                    "Content-Type":"application/x-www-form-urlencoded",
+                    "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                    },
+                params={
+                    "Page": "1", "PageSize": "1"
+                    }
+            )
+            resp = response.json()
+            print(resp)
       parameters:
       - name: NetworkAccessProfileSid
         in: path
@@ -3546,6 +3585,45 @@ paths:
       description: Add a Network resource to the Network Access Profile resource.
       tags:
       - SupersimV1NetworkAccessProfileNetwork
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -X POST "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<Sid>/Networks" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <YOUR_AUTH_TOKEN>" --data-urlencode "Networks=<NETWORK_SID>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+
+            const data = new URLSearchParams({
+              "Network": "<NETWORK_SID>"
+            });
+            const response = await fetch('https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks', {
+                method: 'POST',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                },
+                body: data.toString()
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+            response = requests.post(
+                "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks",
+                headers={
+                    "Content-Type":"application/x-www-form-urlencoded",
+                    "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                },
+                data={
+                    "Network": "<NETWORK_SID>"
+                }
+            )
+            resp = response.json()
+            print(resp)
       parameters:
       - name: NetworkAccessProfileSid
         in: path
@@ -3635,6 +3713,36 @@ paths:
       description: Remove a Network resource from the Network Access Profile resource's.
       tags:
       - SupersimV1NetworkAccessProfileNetwork
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L -X DELETE "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID>" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            const response = await fetch('https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID', {
+              method: "DELETE",
+              headers: {
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+              }
+            });
+            console.log(response);  
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+            response = requests.delete(
+                "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID>",
+                headers={
+                    "Content-Type":"application/x-www-form-urlencoded",
+                    "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
+            )
+            if response.status_code == 204:
+                print("Network sid deleted successfully from network access profile .")
+            else:
+                print(f"Failed to delete network sid from network access profile: {response.status_code} {response.reason}")
       parameters:
       - name: NetworkAccessProfileSid
         in: path
@@ -3666,6 +3774,38 @@ paths:
       description: Fetch a Network Access Profile resource's Network resource.
       tags:
       - SupersimV1NetworkAccessProfileNetwork
+      x-codeSamples:
+      - lang: 'cURL'
+        label: cURL
+        source: |
+          curl -L "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID>" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>"
+      - lang: 'NodeJs'
+        label: NodeJs
+        source: |
+          import { URLSearchParams } from "url";
+          const response = await fetch('https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID>', {
+              method: 'GET',
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+              }
+          });
+          const resp = await response.json();
+          console.log(resp);
+      - lang: 'Python'
+        label: Python
+        source: |
+          import requests
+
+          response = requests.get(
+              "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID>", 
+              headers={
+                      "Content-Type":"application/x-www-form-urlencoded",
+                      "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                      }
+              )
+          resp = response.json()
+          print(resp)
       parameters:
       - name: NetworkAccessProfileSid
         in: path
