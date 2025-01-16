@@ -945,6 +945,7 @@ paths:
           label: Python
           source: |
             import requests
+
             response = requests.get(
               "https://supersim.api.korewireless.com/v1/Sims/<Sid>/BillingPeriods", 
               headers={
@@ -1135,6 +1136,7 @@ paths:
           label: Python
           source: |
             import requests
+
             response = requests.post("https://supersim.api.korewireless.com/v1/ESimProfiles",
                 headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN>"},
                 data={"Eid":"<YOUR_EID>"}
@@ -1558,6 +1560,7 @@ paths:
           label: Python
           source: |
             import requests
+
             response = requests.get(
               "https://supersim.api.korewireless.com/v1/ESimProfiles/<Sid>", 
               headers={
@@ -1692,6 +1695,7 @@ paths:
           label: Python
           source: |
             import requests
+
             response = requests.post(
                 "https://supersim.api.korewireless.com/v1/Fleets",
                 headers={
@@ -2810,8 +2814,17 @@ paths:
           source: |
             import requests
 
-            response = requests.get("https://supersim.api.korewireless.com/v1/Networks", headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN>"},
-            params={"Page": "1", "PageSize": "1"})
+            response = requests.get(
+              "https://supersim.api.korewireless.com/v1/Networks", 
+              headers={
+                "Content-Type":"application/x-www-form-urlencoded",
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+              },
+              params={
+                "Page": "1", 
+                "PageSize": "1"
+              }
+            )
             resp = response.json()
             print(resp)
       parameters:
@@ -3010,6 +3023,7 @@ paths:
           label: Python
           source: |
             import requests
+
             response = requests.post(
                 "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles",
                 headers={
@@ -3401,6 +3415,7 @@ paths:
           label: Python
           source: |
             import requests
+
             response = requests.post(
                 "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<Sid>",
                 headers={
@@ -3676,6 +3691,7 @@ paths:
           label: Python
           source: |
             import requests
+
             response = requests.post(
                 "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks",
                 headers={
@@ -3796,6 +3812,7 @@ paths:
           label: Python
           source: |
             import requests
+
             response = requests.delete(
                 "https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks/<NETWORK_SID>",
                 headers={
@@ -3948,6 +3965,47 @@ paths:
       description: Retrieve a list of Settings Updates.
       tags:
       - SupersimV1SettingsUpdate
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L "https://supersim.api.korewireless.com/v1/SettingsUpdates?Status=successful&Page=1&PageSize=10" --header "Authorization: Bearer <YOUR_AUTH_TOKEN>" 
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+
+            const url = "https://supersim.api.korewireless.com/v1/SettingsUpdates";
+            const params = new URLSearchParams({ Status: "successful", Page: "1", PageSize: "10" });
+
+            const response = await fetch(`${url}?${params.toString()}`, {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+
+            response = requests.get(
+              "https://supersim.api.korewireless.com/v1/SettingsUpdates", 
+              headers={
+                "Content-Type":"application/x-www-form-urlencoded",
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+              },
+              params={
+                "Status":"successful",
+                "Page": "1", 
+                "PageSize": "10"
+                }
+            )
+            resp = response.json()
+            print(resp)
       parameters:
       - name: Sim
         in: query
@@ -4182,10 +4240,17 @@ paths:
           label: Python
           source: |
             import requests
+            
             response = requests.post(
                 "https://supersim.api.korewireless.com/v1/Sims",
-                headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN>},
-                data={"Iccid":"89883070000123456789", "RegistrationCode":"H3LL0W0RLD"}
+                headers={
+                  "Content-Type":"application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>
+                },
+                data={
+                  "Iccid":"89883070000123456789", 
+                  "RegistrationCode":"H3LL0W0RLD"
+                }
             )
             resp = response.json()
             print(resp)
@@ -4289,7 +4354,14 @@ paths:
           label: Python
           source: |
             import requests
-            response = requests.get("https://supersim.api.korewireless.com/v1/Sims", headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN>"})
+
+            response = requests.get(
+              "https://supersim.api.korewireless.com/v1/Sims", 
+              headers={
+                "Content-Type":"application/x-www-form-urlencoded",
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+              }
+            )
             resp = response.json()
             print(resp)
       parameters:
@@ -4550,7 +4622,14 @@ paths:
           label: Python
           source: |
             import requests
-            response = requests.get("https://supersim.api.korewireless.com/v1/Sims/<Sid>", headers={"Content-Type":"application/x-www-form-urlencoded","Authorization": "Bearer <YOUR_AUTH_TOKEN>"})
+
+            response = requests.get(
+              "https://supersim.api.korewireless.com/v1/Sims/<Sid>", 
+              headers={
+                "Content-Type":"application/x-www-form-urlencoded",
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+              }
+            )
             resp = response.json()
             print(resp)
       responses:
@@ -4653,14 +4732,14 @@ paths:
           label: Python
           source: |
             import requests
+
             url = "https://supersim.api.korewireless.com/v1/Sims/<Sid>"
             data = { 
                 "UniqueName": "<NEW_UNIQUE_NAME>", 
                 "CallbackUrl" : "<YOUR_CALLBACK_URL>", 
-                "CallbackMethod" : "<GET_OR_POST>" }
+                "CallbackMethod" : "<GET_OR_POST>"}
             headers = {
-                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
-            }
+                "Authorization": "Bearer <YOUR_AUTH_TOKEN>"}
             response = requests.post(url, data=data, headers=headers)
             if response.status_code == 200:
                 print(response.json())
