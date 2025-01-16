@@ -4045,7 +4045,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "labe": "cURL",
+            "label": "cURL",
             "source": "curl -L \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<NETWORK_ACCESS_PROFILE_SID>/Networks?Page=1&PageSize=10\" --header \"Authorization: Bearer <YOUR_AUTH_TOKEN>\"\n"
           },
           {
