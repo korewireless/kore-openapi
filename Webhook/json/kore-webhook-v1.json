@@ -1,10 +1,25 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Webhook API",
-    "description": "API for creating, retrieving, and modifying Webhook.",
+    "title": "KORE - Webhook API",
+    "description": "This is the publi API for creating, retrieving, and modifying Webhook.",
+    "termsOfService": "https://pardot.korewireless.com/koremsa",
+    "contact": {
+      "name": "KORE Support",
+      "url": "https://korewireless.service-now.com/csm",
+      "email": "support@korewireless.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
     "version": "1.0.0"
   },
+  "servers": [
+    {
+      "url": "https://webhook.api.korewireless.com"
+    }
+  ],
   "security": [
     {
       "LambdaTokenAuthorizer": []
@@ -15,8 +30,7 @@
   ],
   "tags": [
     {
-      "name": "Owner",
-      "x-amazon-apigateway-tag-value": "Webhook"
+      "name": "Webhook"
     }
   ],
   "paths": {
@@ -24,6 +38,9 @@
       "post": {
         "summary": "Create a new secret",
         "description": "Creates a new secret with associated data.",
+        "tags": [
+          "Webhook"
+        ],
         "operationId": "createSecret",
         "parameters": [
           {
@@ -365,6 +382,9 @@
       "get": {
         "summary": "Retrieve a list of secrets",
         "description": "Retrieves a list of secrets, optionally filtered by status.",
+        "tags": [
+          "Webhook"
+        ],
         "operationId": "getSecrets",
         "parameters": [
           {
@@ -373,25 +393,28 @@
             "description": "Filter secrets by their status.",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "active"
             }
           },
           {
             "name": "page_number",
             "in": "query",
-            "description": "Filter that indicates the current pagination index of the response",
+            "description": "Optional Filter that indicates the current pagination index of the response",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "example": 1
             }
           },
           {
             "name": "page_size",
             "in": "query",
-            "description": "Filter that indicates the total number of records included in the response.",
+            "description": "Optional Filter that indicates the total number of records included in the response.",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "example": 10
             }
           },
           {
@@ -710,83 +733,15 @@
             }
           }
         }
-      },
-      "options": {
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Accept",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Methods": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Credentials": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Headers": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {}
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Credentials": "'true'",
-                "method.response.header.Access-Control-Allow-Methods": "'POST, GET,PATCH, DELETE, OPTIONS'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date, Authorization,X-Api-Key,x-mock-response-id,X-Amz-Security-Token ,tryittoken'",
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "requestTemplates": {
-            "application/json": "{\"statusCode\": 200}"
-          },
-          "passthroughBehavior": "when_no_match",
-          "type": "mock"
-        }
       }
     },
     "/v1/secrets/{id}": {
       "patch": {
         "summary": "Modify an existing secret",
         "description": "Updates the details of an existing secret specified by secret`id`.",
+        "tags": [
+          "Webhook"
+        ],
         "operationId": "modifySecret",
         "parameters": [
           {
@@ -1144,124 +1099,6 @@
             }
           }
         }
-      },
-      "options": {
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Accept",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Content-Type",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Methods": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Credentials": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Headers": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {}
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Credentials": "'true'",
-                "method.response.header.Access-Control-Allow-Methods": "'POST, GET,PATCH, DELETE, OPTIONS'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date, Authorization,X-Api-Key,x-mock-response-id,X-Amz-Security-Token ,tryittoken'",
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "requestTemplates": {
-            "application/json": "{\"statusCode\": 200}"
-          },
-          "passthroughBehavior": "when_no_match",
-          "type": "mock"
-        }
-      }
-    },
-    "/{proxy+}": {
-      "x-amazon-apigateway-any-method": {
-        "responses": {
-          "404": {
-            "description": "404 response",
-            "content": {},
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Methods": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Credentials": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Headers": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "404": {
-              "statusCode": "404",
-              "responseTemplates": {
-                "application/json": "{\"code\": 30009, \"message\":\"Resource not found\", \"status\": 404, \"info\": \"http//docs.korewireless.com/errors/30009\"}"
-              }
-            }
-          },
-          "requestTemplates": {
-            "application/json": "{\"statusCode\": 404}"
-          },
-          "passthroughBehavior": "when_no_templates",
-          "type": "mock"
-        }
       }
     }
   },
@@ -1271,16 +1108,25 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "the id of the secret created",
+            "nullable": false,
+            "minLength": 30,
+            "maxLength": 30,
+            "example": "whs_01jf8c4889ehtbzt0n9mzk1prc"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "friendly name of the secret",
+            "nullable": false,
+            "example": "my new secret"
           },
           "secret": {
             "type": "string"
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "example": "pending"
           },
           "last_modified": {
             "type": "string",
@@ -1299,13 +1145,26 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "the id of the secret created",
+            "nullable": false,
+            "minLength": 30,
+            "maxLength": 30,
+            "example": "whs_01jf8c4889ehtbzt0n9mzk1prc"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "friendly name of the secret",
+            "nullable": false,
+            "example": "my new secret"
           },
           "status": {
-            "type": "string"
+            "type": "string",
+            "example": "active",
+            "enum": [
+              "active",
+              "Pending"
+            ]
           },
           "last_modified": {
             "type": "string",
@@ -1328,16 +1187,24 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "the id of the secret created",
+                  "nullable": false,
+                  "minLength": 30,
+                  "maxLength": 30,
+                  "example": "whs_01jf8c4889ehtbzt0n9mzk1prc"
                 },
                 "name": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "friendly name of the secret",
+                  "nullable": false,
+                  "example": "my new secret"
                 },
                 "status": {
                   "type": "string",
                   "enum": [
                     "active",
-                    "Pending"
+                    "pending"
                   ]
                 },
                 "last_modified": {
@@ -1351,19 +1218,24 @@
             "type": "object",
             "properties": {
               "count": {
-                "type": "integer"
+                "type": "integer",
+                "example": 1
               },
               "page_size": {
-                "type": "integer"
+                "type": "integer",
+                "example": 10
               },
               "page_number": {
-                "type": "integer"
+                "type": "integer",
+                "example": 1
               },
               "previous_page_url": {
-                "type": "string"
+                "type": "string",
+                "example": "https://webhook.api.korewireless.com/v1/secrets?page_size=1&page_number=2"
               },
               "next_page_url": {
-                "type": "string"
+                "type": "string",
+                "example": "https://webhook.api.korewireless.com/v1/secrets?page_size=1&page_number=4"
               }
             }
           }
@@ -1377,24 +1249,44 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "integer"
+            "type": "integer",
+            "format": "int32",
+            "description": "HTTP Status Code",
+            "example": 403
           },
           "code": {
-            "type": "integer"
+            "type": "integer",
+            "format": "int32",
+            "example": 30010
           },
           "message": {
-            "type": "string"
+            "type": "string",
+            "description": "Error Message",
+            "example": "Resource access forbidden"
           },
           "info": {
-            "type": "string"
+            "type": "string",
+            "description": "Internal Error Message reference",
+            "example": "http//docs.korewireless.com/errors/30010"
           }
         },
         "required": [
+          "code",
+          "status",
           "message"
         ]
       }
     },
     "securitySchemes": {
+      "OAuth": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://api.korewireless.com/api-services/v1/auth/token",
+            "scopes": {}
+          }
+        }
+      },
       "api_key": {
         "type": "apiKey",
         "name": "x-api-key",
@@ -1440,7 +1332,7 @@
     },
     "ACCESS_DENIED": {
       "responseTemplates": {
-        "application/json": "{\n  \"code\": 30010, \n  \"message\":$context.error.messageString,\n  \"error\":\"$context.authorizer.customErrorMessage\",\n  \"status\":403,\n  \"info\": \"http//docs.korewireless.com/errors/30010\"\n }"
+        "application/json": "{\n  \"code\": 30010, \n  \"message\":$context.error.messageString,\n  \"status\":403,\n  \"info\": \"http//docs.korewireless.com/errors/30010\"\n }"
       },
       "responseParameters": {
         "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type'"

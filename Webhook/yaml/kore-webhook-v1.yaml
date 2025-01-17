@@ -11,6 +11,8 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
+servers:
+  - url: https://webhook.api.korewireless.com
 security:
   - LambdaTokenAuthorizer: []
   - api_key: []
@@ -268,14 +270,14 @@ paths:
             #   - Pending
         - name: page_number
           in: query
-          description: Filter that indicates the current pagination index of the response
+          description: Optional Filter that indicates the current pagination index of the response
           required: false
           schema:
             type: integer
             example: 1
         - name: page_size
           in: query
-          description: Filter that indicates the total number of records included in the response.
+          description: Optional Filter that indicates the total number of records included in the response.
           required: false
           schema:
             type: integer
@@ -483,55 +485,6 @@ paths:
               method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
               method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
               method.response.header.Access-Control-Allow-Origin: "'*'"
-    options:
-      parameters:
-        - name: "Authorization"
-          in: "header"
-          schema:
-            type: "string"
-        - name: "Accept"
-          in: "header"
-          schema:
-            type: "string"
-        - name: "Content-Type"
-          in: "header"
-          schema:
-            type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          headers:
-            Access-Control-Allow-Origin:
-              schema:
-                type: "string"
-            Access-Control-Allow-Methods:
-              schema:
-                type: "string"
-            Access-Control-Allow-Credentials:
-              schema:
-                type: "string"
-            Access-Control-Allow-Headers:
-              schema:
-                type: "string"
-          content: {}
-      x-amazon-apigateway-integration:
-        responses:
-          default:
-            statusCode: "200"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods:
-                "'POST, GET,PATCH,\
-                \ DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers:
-                "'Content-Type,X-Amz-Date,\
-                \ Authorization,X-Api-Key,x-mock-response-id,X-Amz-Security-Token\
-                \ ,tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-        requestTemplates:
-          application/json: '{"statusCode": 200}'
-        passthroughBehavior: "when_no_match"
-        type: "mock"
     
   /v1/secrets/{id}:
     patch:
@@ -779,92 +732,7 @@ paths:
               method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
               method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
               method.response.header.Access-Control-Allow-Origin: "'*'"
-    options:
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: The unique identifier of the secret to be updated.
-          schema:
-            type: "integer"
-        - name: "Authorization"
-          in: "header"
-          schema:
-            type: "string"
 
-        - name: "Accept"
-          in: "header"
-          schema:
-            type: "string"
-        - name: "Content-Type"
-          in: "header"
-          schema:
-            type: "string"
-      responses:
-        "200":
-          description: "200 response"
-          headers:
-            Access-Control-Allow-Origin:
-              schema:
-                type: "string"
-            Access-Control-Allow-Methods:
-              schema:
-                type: "string"
-            Access-Control-Allow-Credentials:
-              schema:
-                type: "string"
-            Access-Control-Allow-Headers:
-              schema:
-                type: "string"
-          content: {}
-      x-amazon-apigateway-integration:
-        responses:
-          default:
-            statusCode: "200"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods:
-                "'POST, GET,PATCH,\
-                \ DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers:
-                "'Content-Type,X-Amz-Date,\
-                \ Authorization,X-Api-Key,x-mock-response-id,X-Amz-Security-Token\
-                \ ,tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-        requestTemplates:
-          application/json: '{"statusCode": 200}'
-        passthroughBehavior: "when_no_match"
-        type: "mock"
-
-  /{proxy+}:
-    x-amazon-apigateway-any-method:
-      responses:
-        404:
-          description: "404 response"
-          content: {}
-          headers:
-            Access-Control-Allow-Origin:
-              schema:
-                type: "string"
-            Access-Control-Allow-Methods:
-              schema:
-                type: "string"
-            Access-Control-Allow-Credentials:
-              schema:
-                type: "string"
-            Access-Control-Allow-Headers:
-              schema:
-                type: "string"
-      x-amazon-apigateway-integration:
-        responses:
-          404:
-            statusCode: "404"
-            responseTemplates:
-              application/json: '{"code": 30009, "message":"Resource not found", "status": 404, "info": "http//docs.korewireless.com/errors/30009"}'
-        requestTemplates:
-          application/json: '{"statusCode": 404}'
-        passthroughBehavior: "when_no_templates"
-        type: "mock"
 
 components:
   schemas:
@@ -968,8 +836,10 @@ components:
                 example: 1
             previous_page_url:
                 type: string  
+                example: https://webhook.api.korewireless.com/v1/secrets?page_size=1&page_number=2
             next_page_url:
-                type: string                    
+                type: string
+                example: https://webhook.api.korewireless.com/v1/secrets?page_size=1&page_number=4
       required:
         - data
         - meta_data
@@ -978,13 +848,24 @@ components:
       properties:
         status:
           type: integer
+          format: int32
+          description: HTTP Status Code
+          example: 403
         code:
           type: integer
+          format: int32
+          example: 30010
         message:
           type: string
+          description: Error Message
+          example: Resource access forbidden
         info:
           type: string
+          description: Internal Error Message reference
+          example: http//docs.korewireless.com/errors/30010
       required:
+        - code
+        - status
         - message
   securitySchemes:
     OAuth: 
