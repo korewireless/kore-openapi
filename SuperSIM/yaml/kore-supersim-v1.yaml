@@ -2321,6 +2321,57 @@ paths:
       description: Send an IP Command to a Super SIM.
       tags:
       - SupersimV1IpCommand
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -X POST "https://supersim.api.korewireless.com/v1/IpCommands" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <YOUR_AUTH_TOKEN>" --data-urlencode "Sim=<Sid>" --data-urlencode "Payload=<IP_COMMAND_PAYLOAD>" --data-urlencode "DevicePort=<DEVICE_PORT>" --data-urlencode "PayloadType=<text|binary>"  --data-urlencode "CallbackUrl=<YOUR_CALLBACK_URL>" --data-urlencode "CallbackMethod=<GET_OR_POST>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+
+            const data = new URLSearchParams({
+              "Sim": "<Sid>",
+              "Payload": "<IP_COMMAND_PAYLOAD>",
+              "PayloadType": "<text|binary>",
+              "DevicePort": "<DEVICE_PORT>",
+              "CallbackUrl": "<YOUR_CALLBACK_URL>",
+              "CallbackMethod":"<GET_OR_POST>"
+            });
+
+            const response = await fetch('https://supersim.api.korewireless.com/v1/IpCommands', {
+                method: 'POST',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                },
+                body: data.toString()
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+
+            response = requests.post(
+                "https://supersim.api.korewireless.com/v1/IpCommands",
+                headers={
+                        "Content-Type":"application/x-www-form-urlencoded",
+                        "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                    },
+                data={
+                        "Sim":"<Sid>",
+                        "Payload": "<IP_COMMAND_PAYLOAD>",
+                        "PayloadType": "<text|binary>",
+                        "DevicePort": "<DEVICE_PORT>",
+                        "CallbackUrl": "<YOUR_CALLBACK_URL>",
+                        "CallbackMethod":"<GET_OR_POST>"
+                    }
+            )
+            resp = response.json()
+            print(resp)
       responses:
         '201':
           content:
@@ -2444,6 +2495,53 @@ paths:
       description: Retrieve a list of IP Commands from your account.
       tags:
       - SupersimV1IpCommand
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L "https://supersim.api.korewireless.com/v1/IpCommands?Sim=<Sid>&Page=1&PageSize=10" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <YOUR_AUTH_TOKEN>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+
+            const url = "https://supersim.api.korewireless.com/v1/IpCommands";
+            const params = new URLSearchParams(
+                { 
+                  Sim: "<Sid>", 
+                  Page: "1", 
+                  PageSize: "1" 
+                }
+            );
+
+            const response = await fetch(`${url}?${params.toString()}`, {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+
+            response = requests.get(
+                "https://supersim.api.korewireless.com/v1/IpCommands", 
+                headers={
+                    "Content-Type":"application/x-www-form-urlencoded",
+                    "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                },
+                params={
+                    "Sim": "<Sid>",
+                    "Page": "1", 
+                    "PageSize": "1"
+                }
+            )
+            resp = response.json()
+            print(resp)
       parameters:
       - name: Sim
         in: query
@@ -2614,6 +2712,39 @@ paths:
       description: Fetch IP Command instance from your account.
       tags:
       - SupersimV1IpCommand
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L "https://supersim.api.korewireless.com/v1/IpCommands/<IP_COMMAND_SID>" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <YOUR_AUTH_TOKEN>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+
+            const response = await fetch('https://supersim.api.korewireless.com/v1/IpCommands/<IP_COMMAND_SID>', {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+
+            response = requests.get(
+                "https://supersim.api.korewireless.com/v1/IpCommands/<IP_COMMAND_SID>", 
+                headers={
+                    "Content-Type":"application/x-www-form-urlencoded",
+                    "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
+            )
+            resp = response.json()
+            print(resp) 
       parameters:
       - name: Sid
         in: path
