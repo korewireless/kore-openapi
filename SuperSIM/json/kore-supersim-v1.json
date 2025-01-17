@@ -6482,6 +6482,23 @@
         "tags": [
           "SupersimV1UsageRecord"
         ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -L \"https://supersim.api.korewireless.com/v1/UsageRecords?Page=1&PageSize=10\" --header \"Authorization: Bearer <YOUR_AUTH_TOKEN>\"\n"
+          },
+          {
+            "lang": "NodeJs",
+            "label": "NodeJs",
+            "source": "import { URLSearchParams } from \"url\";\n\nconst url = \"https://supersim.api.korewireless.com/v1/UsageRecords\";\nconst params = new URLSearchParams({ Page: \"1\", PageSize: \"10\" });\n\nconst response = await fetch(`${url}?${params.toString()}`, {\n    method: 'GET',\n    headers: {\n      \"Content-Type\": \"application/x-www-form-urlencoded\",\n      \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    }\n});\nconst resp = await response.json();\nconsole.log(resp);\n"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\n\nresponse = requests.get(\n    \"https://supersim.api.korewireless.com/v1/UsageRecords\", \n    headers={\n        \"Content-Type\":\"application/x-www-form-urlencoded\",\n        \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n        },\n    params={\n        \"Page\": \"1\", \n        \"PageSize\": \"10\"\n        }\n)\nresp = response.json()\nprint(resp)\n"
+          }
+        ],
         "parameters": [
           {
             "name": "Sim",
