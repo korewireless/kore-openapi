@@ -5237,6 +5237,53 @@ paths:
       description: Retrieve a list of SMS Commands from your account.
       tags:
       - SupersimV1SmsCommand
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L "https://supersim.api.korewireless.com/v1/SmsCommands?Sim=<Sid>&Page=1&PageSize=10" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <YOUR_AUTH_TOKEN>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+
+            const url = "https://supersim.api.korewireless.com/v1/SmsCommands";
+            const params = new URLSearchParams(
+                { 
+                  Sim: "<Sid>", 
+                  Page: "1", 
+                  PageSize: "1" 
+                }
+            );
+
+            const response = await fetch(`${url}?${params.toString()}`, {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+
+            response = requests.get(
+                "https://supersim.api.korewireless.com/v1/SmsCommands", 
+                headers={
+                    "Content-Type":"application/x-www-form-urlencoded",
+                    "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                },
+                params={
+                    "Sim": "<Sid>",
+                    "Page": "1", 
+                    "PageSize": "1"
+                }
+            )
+            resp = response.json()
+            print(resp)
       parameters:
       - name: Sim
         in: query
@@ -5397,6 +5444,39 @@ paths:
       description: Fetch SMS Command instance from your account.
       tags:
       - SupersimV1SmsCommand
+      x-codeSamples:
+        - lang: 'cURL'
+          label: cURL
+          source: |
+            curl -L "https://supersim.api.korewireless.com/v1/SmsCommands/<SMS_COMMAND_SID>" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <YOUR_AUTH_TOKEN>"
+        - lang: 'NodeJs'
+          label: NodeJs
+          source: |
+            import { URLSearchParams } from "url";
+
+            const response = await fetch('https://supersim.api.korewireless.com/v1/SmsCommands/<SMS_COMMAND_SID>', {
+                method: 'GET',
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
+            });
+            const resp = await response.json();
+            console.log(resp);
+        - lang: 'Python'
+          label: Python
+          source: |
+            import requests
+
+            response = requests.get(
+                "https://supersim.api.korewireless.com/v1/SmsCommands/<SMS_COMMAND_SID>", 
+                headers={
+                    "Content-Type":"application/x-www-form-urlencoded",
+                    "Authorization": "Bearer <YOUR_AUTH_TOKEN>"
+                }
+            )
+            resp = response.json()
+            print(resp)  
       parameters:
       - name: Sid
         in: path
