@@ -6008,6 +6008,23 @@
         "tags": [
           "SupersimV1SmsCommand"
         ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "cURL",
+            "source": "curl -X POST \"https://supersim.api.korewireless.com/v1/SmsCommands\" -H \"Content-Type: application/x-www-form-urlencoded\" -H \"Authorization: Bearer <YOUR_AUTH_TOKEN>\" --data-urlencode \"Payload=<SMS_PAYLOAD>\"\n"
+          },
+          {
+            "lang": "NodeJs",
+            "label": "NodeJs",
+            "source": "import { URLSearchParams } from \"url\";\n\nconst data = new URLSearchParams({\n  \"Sim\": \"<Sid>\",\n  \"Payload\": \"<SMS_PAYLOAD>\"\n});\n\nconst response = await fetch('https://supersim.api.korewireless.com/v1/SmsCommands', {\n    method: 'POST',\n    headers: {\n      \"Content-Type\": \"application/x-www-form-urlencoded\",\n      \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n    },\n    body: data.toString()\n});\nconst resp = await response.json();\nconsole.log(resp);\n"
+          },
+          {
+            "lang": "Python",
+            "label": "Python",
+            "source": "import requests\n\nresponse = requests.post(\n    \"https://supersim.api.korewireless.com/v1/SmsCommands\",\n    headers={\n            \"Content-Type\":\"application/x-www-form-urlencoded\",\n            \"Authorization\": \"Bearer <YOUR_AUTH_TOKEN>\"\n        },\n    data={\n            \"Sim\":\"<Sid>\",\n            \"Payload\": \"<SMS_PAYLOAD>\"\n        }\n)\nresp = response.json()\nprint(resp)\n"
+          }
+        ],
         "responses": {
           "201": {
             "content": {
