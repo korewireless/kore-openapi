@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: KORE - Webhook API
-  description: This is the publi API for creating, retrieving, and modifying Webhook.
+  description: This is the public Webhook API for creating, retrieving and modifying secrets.
   termsOfService: "https://pardot.korewireless.com/koremsa"
   contact: 
     name: KORE Support
@@ -13,9 +13,6 @@ info:
   version: 1.0.0
 servers:
   - url: https://webhook.api.korewireless.com
-security:
-  - LambdaTokenAuthorizer: []
-  - api_key: []
 
 tags:
   - name: Webhook
@@ -42,10 +39,6 @@ paths:
           in: "header"
           schema:
             type: "string"
-        - name: "i-kore-auth-account"
-          in: "header"
-          schema:
-            type: "string"    
 
       requestBody:
         required: true
@@ -59,6 +52,9 @@ paths:
                   description: A user-friendly name for the secret.
               required:
                 - Name
+              example:
+               Name: my new secret
+
       responses:
         "201":
           description: Secret created successfully
@@ -180,78 +176,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiErrorResponse"
-      x-amazon-apigateway-request-validator: "Validate body, query string parameters, and headers"
-      x-amazon-apigateway-integration:
-        type: http
-        httpMethod: POST
-        uri: "${self:custom.${env:Type}.url}/v1/account/{k-account}/secrets"
-        connectionType: ${self:custom.${env:Type}.vpc.connectionType}
-        connectionId: ${self:custom.${env:Type}.vpc.connectionId}
-        passthroughBehavior: when_no_match
-        requestParameters:
-          integration.request.header.Accept: "method.request.header.Accept"
-          integration.request.header.Authorization: "method.request.header.Authorization"
-          integration.request.header.Content-Type: "method.request.header.Content-Type"
-          integration.request.path.k-account: "method.request.header.i-kore-auth-account"
-        requestTemplates:
-          application/json: >
-            #set($context.requestOverride.header.source='publicapi')
-            #set($context.requestOverride.header.clientrequestid=$context.requestId)
-            #set($inputJson = $input.path('$'))
-            #set($inputJson.id="")
-            #set($inputJson.account_type= "kore")
-            #set($inputJson.user_email= $input.params('user-email'))
-            $input.json('$')  
-        responses:
-          "201":
-            statusCode: "201"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "400":
-            statusCode: "400"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "401":
-            statusCode: "401"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "403":
-            statusCode: "403"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "404":
-            statusCode: "404"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "405":
-            statusCode: "405"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"    
-          "5\\d{2}":
-            statusCode: "500"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
+      security:
+        - Bearer_JWT_token: []
+        - OAuth: []
+
     get:
       summary: Retrieve a list of secrets
       description: Retrieves a list of secrets, optionally filtered by status.
@@ -265,9 +193,6 @@ paths:
           schema:
             type: string
             example: active
-            # enum:
-            #   - active
-            #   - Pending
         - name: page_number
           in: query
           description: Optional Filter that indicates the current pagination index of the response
@@ -419,72 +344,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiErrorResponse"
-      x-amazon-apigateway-request-validator: "Validate body, query string parameters, and headers"
-      x-amazon-apigateway-integration:
-        type: http
-        httpMethod: GET
-        uri: "${self:custom.${env:Type}.url}/v1/account/{k-account}/secrets"
-        connectionType: ${self:custom.${env:Type}.vpc.connectionType}
-        connectionId: ${self:custom.${env:Type}.vpc.connectionId}
-        passthroughBehavior: when_no_match
-        requestParameters:
-          integration.request.querystring.status: "method.request.querystring.status"
-          integration.request.querystring.page_number: "method.request.querystring.page_number"
-          integration.request.querystring.page_size: "method.request.querystring.page_size"             
-          integration.request.header.Accept: "method.request.header.Accept"
-          integration.request.path.k-account: "method.request.header.i-kore-auth-account"
-          integration.request.header.Authorization: "method.request.header.Authorization"
-          integration.request.header.Content-Type: "method.request.header.Content-Type"
-        responses:
-          "200":
-            statusCode: "200"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "400":
-            statusCode: "400"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "401":
-            statusCode: "401"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "403":
-            statusCode: "403"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "404":
-            statusCode: "404"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "405":
-            statusCode: "405"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"                  
-          "5\\d{2}":
-            statusCode: "500"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
+      security:
+        - Bearer_JWT_token: []
+        - OAuth: []
+      
     
   /v1/secrets/{id}:
     patch:
@@ -511,10 +374,7 @@ paths:
           in: "header"
           schema:
             type: "string"
-        - name: "i-kore-auth-account"
-          in: "header"
-          schema:
-            type: "string"    
+  
       requestBody:
         required: true
         content:
@@ -527,9 +387,6 @@ paths:
                   description: A user-friendly name for the secret.
                 Status:
                   type: string
-                  # enum:
-                  #   - active
-                  #   - Pending
                   description: The status of the secret.
       responses:
         "200":
@@ -652,87 +509,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiErrorResponse"
-      x-amazon-apigateway-request-validator: "Validate body, query string parameters, and headers"
-      x-amazon-apigateway-integration:
-        type: http
-        httpMethod: PATCH
-        uri: "${self:custom.${env:Type}.url}/v1/account/{k-account}/secrets/{id}"
-        connectionType: ${self:custom.${env:Type}.vpc.connectionType}
-        connectionId: ${self:custom.${env:Type}.vpc.connectionId}
-        passthroughBehavior: when_no_match
-        requestParameters:
-          integration.request.path.id: "method.request.path.id"
-          integration.request.header.Accept: "method.request.header.Accept"
-          integration.request.header.Authorization: "method.request.header.Authorization"
-          integration.request.header.Content-Type: "method.request.header.Content-Type"
-          integration.request.path.k-account: "method.request.header.i-kore-auth-account"
-        requestTemplates:
-          application/json: >
-            #set($context.requestOverride.header.source='publicapi')
-            #set($context.requestOverride.header.clientrequestid=$context.requestId)
-            #set($inputJson = $input.path('$'))
-            #set($inputJson.id= $input.params('id'))
-            #set($inputJson.account_type= "kore")
-            #set($inputJson.user_email= $input.params('user-email'))
-            $input.json('$')  
-        responses:
-          "200":
-            statusCode: "200"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "201":
-            statusCode: "201"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "400":
-            statusCode: "400"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "401":
-            statusCode: "401"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "403":
-            statusCode: "403"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "404":
-            statusCode: "404"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-          "405":
-            statusCode: "405"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"              
-          "5\\d{2}":
-            statusCode: "500"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Credentials: "'true'"
-              method.response.header.Access-Control-Allow-Methods: "'POST, GET, PATCH, DELETE, OPTIONS'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key, x-mock-response-id, X-Amz-Security-Token, tryittoken'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-
+      security:
+        - Bearer_JWT_token: []
+        - OAuth: []
+      
 
 components:
   schemas:
@@ -868,77 +648,15 @@ components:
         - status
         - message
   securitySchemes:
+    Bearer_JWT_token:
+      description: JWT bearer token description...
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
     OAuth: 
       type: oauth2
       flows:
         clientCredentials: 
           tokenUrl: https://api.korewireless.com/api-services/v1/auth/token
           scopes: {}
-    api_key:
-      type: "apiKey"
-      name: "x-api-key"
-      in: "header"
-    LambdaTokenAuthorizer:
-      type: "apiKey"
-      name: "Unused"
-      in: "header"
-      x-amazon-apigateway-authtype: "custom"
-      x-amazon-apigateway-authorizer:
-        authorizerUri: "arn:aws:apigateway:${env:AWS_REGION}:lambda:path/2015-03-31/functions/arn:aws:lambda:${env:AWS_REGION}:${env:TARGET_ACCOUNT_ID}:function:API-${env:ENV_NAME}-WebhookLambdaAuthorizer/invocations"
-        authorizerResultTtlInSeconds: 300
-        identitySource:
-          "method.request.header.Authorization, context.identity.sourceIp,\
-          \ context.path"
-        type: "request"
-
-x-amazon-apigateway-api-key-source: AUTHORIZER
-x-amazon-apigateway-request-validators:
-  Validate body, query string parameters, and headers:
-    validateRequestParameters: true
-    validateRequestBody: true
-x-amazon-apigateway-gateway-responses:
-  DEFAULT_4XX:
-    responseTemplates:
-      application/json: |-
-        {"code": 30006, "message":$context.error.messageString, "status":400, "info": "http//docs.korewireless.com/errors/30006" }
-    responseParameters:
-      gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type'"
-  DEFAULT_5XX:
-    responseTemplates:
-      application/json: '{"code": 30008, "message":$context.error.messageString,  "status":500, "info": "http//docs.korewireless.com/errors/30008"}'
-    responseParameters:
-      gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type'"
-  ACCESS_DENIED:
-    responseTemplates:
-      application/json: |-
-        {
-          "code": 30010, 
-          "message":$context.error.messageString,
-          "status":403,
-          "info": "http//docs.korewireless.com/errors/30010"
-         }
-    responseParameters:
-      gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type'"
-  UNAUTHORIZED:
-    statusCode: 401
-    responseTemplates:
-      application/json: |-
-        {
-          "code": 30011, 
-          "message":$context.error.messageString, 
-          "status":401, 
-          "info": "http//docs.korewireless.com/errors/30011"
-        }
-    responseParameters:
-      gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type'"
-  BAD_REQUEST_BODY:
-    statusCode: 400
-    responseParameters:
-      gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type'"
-    responseTemplates:
-      application/json:
-        "{\"code\": 30006, \"message\":$context.error.messageString , \"error\":\"\
-        $context.error.validationErrorString\", \"status\":400, \"info\": \"http//docs.korewireless.com/errors/30006\"}"
-x-amazon-apigateway-binary-media-types:
-  - "multipart/form-data"
-  - "application/x-www-form-urlencoded"
+     
