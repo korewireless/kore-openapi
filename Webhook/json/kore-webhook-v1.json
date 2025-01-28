@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "KORE - Webhook API",
-    "description": "This is the public Webhook API for creating, retrieving and modifying secrets.",
+    "title": "Webhook APIs",
+    "description": "This is the public Webhook API for creating, retrieving, and modifying secrets.",
     "termsOfService": "https://pardot.korewireless.com/koremsa",
     "contact": {
       "name": "KORE Support",
@@ -15,21 +15,17 @@
     },
     "version": "1.0.0"
   },
-  "servers": [
-    {
-      "url": "https://webhook.api.korewireless.com"
-    }
-  ],
   "tags": [
     {
-      "name": "Webhook"
+      "name": "Owner",
+      "x-amazon-apigateway-tag-value": "Webhook"
     }
   ],
   "paths": {
     "/v1/secrets": {
       "post": {
         "summary": "Create a new secret",
-        "description": "Creates a new secret with associated data.",
+        "description": "Creates a new secret with associated metadata.",
         "tags": [
           "Webhook"
         ],
@@ -71,10 +67,7 @@
                 },
                 "required": [
                   "Name"
-                ],
-                "example": {
-                  "Name": "my new secret"
-                }
+                ]
               }
             }
           }
@@ -82,6 +75,28 @@
         "responses": {
           "201": {
             "description": "Secret created successfully",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -282,15 +297,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "Bearer_JWT_token": []
-          },
-          {
-            "OAuth": []
-          }
-        ]
+        }
       },
       "get": {
         "summary": "Retrieve a list of secrets",
@@ -350,18 +357,33 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "i-kore-auth-account",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
           "200": {
             "description": "A list of secrets",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -562,25 +584,17 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "Bearer_JWT_token": []
-          },
-          {
-            "OAuth": []
-          }
-        ]
+        }
       }
     },
     "/v1/secrets/{id}": {
       "patch": {
         "summary": "Modify an existing secret",
-        "description": "Updates the details of an existing secret specified by secret`id`.",
+        "description": "Updates the details of an existing secret specified by `id`.",
+        "operationId": "modifySecret",
         "tags": [
           "Webhook"
         ],
-        "operationId": "modifySecret",
         "parameters": [
           {
             "name": "id",
@@ -636,6 +650,28 @@
         "responses": {
           "200": {
             "description": "Secret updated successfully",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -836,15 +872,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "Bearer_JWT_token": []
-          },
-          {
-            "OAuth": []
-          }
-        ]
+        }
       }
     }
   },
@@ -1008,11 +1036,11 @@
           "message": {
             "type": "string",
             "description": "Error Message",
-            "example": "Resource access forbidden"
+            "example": "Resource access is forbidden"
           },
           "info": {
             "type": "string",
-            "description": "Internal Error Message reference",
+            "description": "Internal Error Message Reference",
             "example": "http//docs.korewireless.com/errors/30010"
           }
         },
@@ -1024,13 +1052,7 @@
       }
     },
     "securitySchemes": {
-      "Bearer_JWT_token": {
-        "description": "JWT bearer token description...",
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      },
-      "OAuth": {
+      "Auth": {
         "type": "oauth2",
         "flows": {
           "clientCredentials": {
@@ -1040,5 +1062,17 @@
         }
       }
     }
-  }
+  },
+  "security": [
+    {},
+    {
+      "Auth": []
+    }
+  ],
+  "x-hideTryItPanel": true,
+  "servers": [
+    {
+      "url": "https://webhook.api.korewireless.com"
+    }
+  ]
 }

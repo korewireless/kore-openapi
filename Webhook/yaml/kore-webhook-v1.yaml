@@ -1,45 +1,42 @@
+---
 openapi: 3.0.3
 info:
-  title: KORE - Webhook API
-  description: This is the public Webhook API for creating, retrieving and modifying secrets.
-  termsOfService: "https://pardot.korewireless.com/koremsa"
-  contact: 
+  title: Webhook APIs
+  description: This is the public Webhook API for creating, retrieving, and modifying
+    secrets.
+  termsOfService: https://pardot.korewireless.com/koremsa
+  contact:
     name: KORE Support
     url: https://korewireless.service-now.com/csm
     email: support@korewireless.com
-  license: 
+  license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
-servers:
-  - url: https://webhook.api.korewireless.com
-
 tags:
-  - name: Webhook
-    
-
+- name: Owner
+  x-amazon-apigateway-tag-value: Webhook
 paths:
-
-  /v1/secrets:
-    post: 
+  "/v1/secrets":
+    post:
       summary: Create a new secret
-      description: Creates a new secret with associated data.
-      tags: [Webhook]
+      description: Creates a new secret with associated metadata.
+      tags:
+      - Webhook
       operationId: createSecret
       parameters:
-        - name: "Authorization"
-          in: "header"
-          schema:
-            type: "string"
-        - name: "Accept"
-          in: "header"
-          schema:
-            type: "string"
-        - name: "Content-Type"
-          in: "header"
-          schema:
-            type: "string"
-
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        schema:
+          type: string
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -51,18 +48,28 @@ paths:
                   type: string
                   description: A user-friendly name for the secret.
               required:
-                - Name
-              example:
-               Name: my new secret
-
+              - Name
       responses:
-        "201":
+        '201':
           description: Secret created successfully
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SecretCreated"
-        "400":
+                "$ref": "#/components/schemas/SecretCreated"
+        '400':
           description: Bad Request
           headers:
             Access-Control-Allow-Origin:
@@ -80,8 +87,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "401":
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '401':
           description: Unauthorized
           headers:
             Access-Control-Allow-Origin:
@@ -99,8 +106,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "403":
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '403':
           description: Forbidden
           headers:
             Access-Control-Allow-Origin:
@@ -118,27 +125,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "405":
-          description: Method Not Allowed
-          headers:
-            Access-Control-Allow-Origin:
-              schema:
-                type: string
-            Access-Control-Allow-Methods:
-              schema:
-                type: string
-            Access-Control-Allow-Credentials:
-              schema:
-                type: string
-            Access-Control-Allow-Headers:
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "404":
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '404':
           description: Not Found
           headers:
             Access-Control-Allow-Origin:
@@ -156,8 +144,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "500":
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '405':
+          description: Method Not Allowed
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '500':
           description: Internal Server Error
           headers:
             Access-Control-Allow-Origin:
@@ -175,62 +182,70 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-      security:
-        - Bearer_JWT_token: []
-        - OAuth: []
-
+                "$ref": "#/components/schemas/ApiErrorResponse"
     get:
       summary: Retrieve a list of secrets
       description: Retrieves a list of secrets, optionally filtered by status.
-      tags: [Webhook]
+      tags:
+      - Webhook
       operationId: getSecrets
       parameters:
-        - name: status
-          in: query
-          description: Filter secrets by their status.
-          required: false
-          schema:
-            type: string
-            example: active
-        - name: page_number
-          in: query
-          description: Optional Filter that indicates the current pagination index of the response
-          required: false
-          schema:
-            type: integer
-            example: 1
-        - name: page_size
-          in: query
-          description: Optional Filter that indicates the total number of records included in the response.
-          required: false
-          schema:
-            type: integer
-            example: 10
-        - name: "Authorization"
-          in: "header"
-          schema:
-            type: "string"
-        - name: "Accept"
-          in: "header"
-          schema:
-            type: "string"
-        - name: "Content-Type"
-          in: "header"
-          schema:
-            type: "string"
-        - name: "i-kore-auth-account"
-          in: "header"
-          schema:
-            type: "string"    
+      - name: status
+        in: query
+        description: Filter secrets by their status.
+        required: false
+        schema:
+          type: string
+          example: active
+      - name: page_number
+        in: query
+        description: Optional Filter that indicates the current pagination index of
+          the response
+        required: false
+        schema:
+          type: integer
+          example: 1
+      - name: page_size
+        in: query
+        description: Optional Filter that indicates the total number of records included
+          in the response.
+        required: false
+        schema:
+          type: integer
+          example: 10
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        schema:
+          type: string
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
       responses:
-        "200":
+        '200':
           description: A list of secrets
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PaginatedSecretResponse"
-        "400":
+                "$ref": "#/components/schemas/PaginatedSecretResponse"
+        '400':
           description: Bad Request
           headers:
             Access-Control-Allow-Origin:
@@ -248,8 +263,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "401":
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '401':
           description: Unauthorized
           headers:
             Access-Control-Allow-Origin:
@@ -267,8 +282,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "403":
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '403':
           description: Forbidden
           headers:
             Access-Control-Allow-Origin:
@@ -286,8 +301,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "404":
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '404':
           description: Not Found
           headers:
             Access-Control-Allow-Origin:
@@ -305,8 +320,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "405":
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '405':
           description: Method Not Allowed
           headers:
             Access-Control-Allow-Origin:
@@ -324,8 +339,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "500":
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '500':
           description: Internal Server Error
           headers:
             Access-Control-Allow-Origin:
@@ -343,38 +358,33 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-      security:
-        - Bearer_JWT_token: []
-        - OAuth: []
-      
-    
-  /v1/secrets/{id}:
+                "$ref": "#/components/schemas/ApiErrorResponse"
+  "/v1/secrets/{id}":
     patch:
       summary: Modify an existing secret
-      description: Updates the details of an existing secret specified by secret`id`.
-      tags: [Webhook]
+      description: Updates the details of an existing secret specified by `id`.
       operationId: modifySecret
+      tags:
+      - Webhook
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: The unique identifier of the secret to be updated.
-          schema:
-            type: string
-        - name: "Authorization"
-          in: "header"
-          schema:
-            type: "string"
-        - name: "Accept"
-          in: "header"
-          schema:
-            type: "string"
-        - name: "Content-Type"
-          in: "header"
-          schema:
-            type: "string"
-  
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the secret to be updated.
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      - name: Accept
+        in: header
+        schema:
+          type: string
+      - name: Content-Type
+        in: header
+        schema:
+          type: string
       requestBody:
         required: true
         content:
@@ -389,13 +399,26 @@ paths:
                   type: string
                   description: The status of the secret.
       responses:
-        "200":
+        '200':
           description: Secret updated successfully
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SecretResponse"
-        "400":
+                "$ref": "#/components/schemas/SecretResponse"
+        '400':
           description: Bad Request
           headers:
             Access-Control-Allow-Origin:
@@ -413,8 +436,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "401":
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '401':
           description: Unauthorized
           headers:
             Access-Control-Allow-Origin:
@@ -432,8 +455,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "403":
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '403':
           description: Forbidden
           headers:
             Access-Control-Allow-Origin:
@@ -451,8 +474,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "404":
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '404':
           description: Not Found
           headers:
             Access-Control-Allow-Origin:
@@ -470,8 +493,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "405":
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '405':
           description: Method Not Allowed
           headers:
             Access-Control-Allow-Origin:
@@ -489,8 +512,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-        "500":
+                "$ref": "#/components/schemas/ApiErrorResponse"
+        '500':
           description: Internal Server Error
           headers:
             Access-Control-Allow-Origin:
@@ -508,12 +531,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiErrorResponse"
-      security:
-        - Bearer_JWT_token: []
-        - OAuth: []
-      
-
+                "$ref": "#/components/schemas/ApiErrorResponse"
 components:
   schemas:
     SecretCreated:
@@ -540,11 +558,11 @@ components:
           type: string
           format: date-time
       required:
-        - id
-        - name
-        - secret
-        - status
-        - last_modified          
+      - id
+      - name
+      - secret
+      - status
+      - last_modified
     SecretResponse:
       type: object
       properties:
@@ -564,65 +582,65 @@ components:
           type: string
           example: active
           enum:
-           - active
-           - Pending
+          - active
+          - Pending
         last_modified:
           type: string
           format: date-time
       required:
-        - id
-        - name
-        - status
-        - last_modified
+      - id
+      - name
+      - status
+      - last_modified
     PaginatedSecretResponse:
       type: object
       properties:
         data:
           type: array
-          items: 
+          items:
             type: object
             properties:
-                id:
-                  type: string
-                  description: the id of the secret created
-                  nullable: false
-                  minLength: 30
-                  maxLength: 30
-                  example: whs_01jf8c4889ehtbzt0n9mzk1prc
-                name:
-                  type: string
-                  description: friendly name of the secret
-                  nullable: false
-                  example: my new secret
-                status:
-                  type: string
-                  enum:
-                     - active
-                     - pending
-                last_modified:
-                  type: string
-                  format: date-time
+              id:
+                type: string
+                description: the id of the secret created
+                nullable: false
+                minLength: 30
+                maxLength: 30
+                example: whs_01jf8c4889ehtbzt0n9mzk1prc
+              name:
+                type: string
+                description: friendly name of the secret
+                nullable: false
+                example: my new secret
+              status:
+                type: string
+                enum:
+                - active
+                - pending
+              last_modified:
+                type: string
+                format: date-time
         meta_data:
           type: object
           properties:
             count:
-                type: integer
-                example: 1
+              type: integer
+              example: 1
             page_size:
-                type: integer
-                example: 10
+              type: integer
+              example: 10
             page_number:
-                type: integer
-                example: 1
+              type: integer
+              example: 1
             previous_page_url:
-                type: string  
-                example: https://webhook.api.korewireless.com/v1/secrets?page_size=1&page_number=2
+              type: string
+              example: https://webhook.api.korewireless.com/v1/secrets?page_size=1&page_number=2
             next_page_url:
-                type: string
-                example: https://webhook.api.korewireless.com/v1/secrets?page_size=1&page_number=4
+              type: string
+              example: https://webhook.api.korewireless.com/v1/secrets?page_size=1&page_number=4
       required:
-        - data
-        - meta_data
+      - data
+      - meta_data
     ApiErrorResponse:
       type: object
       properties:
@@ -638,25 +656,25 @@ components:
         message:
           type: string
           description: Error Message
-          example: Resource access forbidden
+          example: Resource access is forbidden
         info:
           type: string
-          description: Internal Error Message reference
+          description: Internal Error Message Reference
           example: http//docs.korewireless.com/errors/30010
       required:
-        - code
-        - status
-        - message
+      - code
+      - status
+      - message
   securitySchemes:
-    Bearer_JWT_token:
-      description: JWT bearer token description...
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-    OAuth: 
+    Auth:
       type: oauth2
       flows:
-        clientCredentials: 
+        clientCredentials:
           tokenUrl: https://api.korewireless.com/api-services/v1/auth/token
           scopes: {}
-     
+security:
+- {}
+- Auth: []
+x-hideTryItPanel: true
+servers:
+- url: https://webhook.api.korewireless.com
