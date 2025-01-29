@@ -28,7 +28,7 @@
         "parameters": [
           {
             "name": "account_id",
-            "description": "KRI of an account is its unique identifier, which begins with acct_. This optional filter parameter lets you get platforms mapped to a specific account.",
+            "description": "The account ID is a unique identifier of your account, which begins with acct_. This optional filter parameter lets you get platforms mapped to a specific account.",
             "in": "query",
             "schema": {
               "type": "string",
@@ -659,7 +659,7 @@
           {
             "name": "account_id",
             "in": "query",
-            "description": "KRI of an account is its unique identifier, which begins with acct_. This optional filter parameter lets you get information for a specific account.",
+            "description": "The account ID is a unique identifier of your account, which begins with acct_. This optional filter parameter lets you get information for a specific account.",
             "schema": {
               "type": "string",
               "example": "acct_xxx"
@@ -995,11 +995,11 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "KRI of the child account"
+            "description": "Account ID of the child account, which begins with acct_"
           },
           "parent_id": {
             "type": "string",
-            "description": "KRI of the parent account"
+            "description": "Account ID of the parent account, which begins with acct_"
           },
           "date_created": {
             "type": "string",
@@ -1020,7 +1020,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "KRI of the account"
+            "description": "ID of the account"
           },
           "legacy_account_id": {
             "type": "string",
