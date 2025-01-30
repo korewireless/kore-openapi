@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "IaM APIs",
-    "description": "These APIs facilitate the management of customer accounts and their relationships. They support creating accounts, retrieving account hierarchies, and managing platform-specific mappings for parent and associated subaccounts. Designed for flexibility and scalability, these APIs ensure efficient handling of account-related data and relationships.",
+    "description": "These APIs facilitate the management of customer accounts and their relationships. They support creating accounts, retrieving account hierarchies, and managing platform-specific mappings for parent and associated child accounts. Designed for flexibility and scalability, these APIs ensure efficient handling of account-related data and relationships.",
     "version": "1.0.0"
   },
   "paths": {
@@ -23,7 +23,7 @@
         "tags": [
           "Accounts"
         ],
-        "description": "This endpoint retrieves the platform mappings for an account and its subaccounts.",
+        "description": "This endpoint retrieves the platform mappings for an account and its child accounts.",
         "operationId": "fetchAccountMappings",
         "parameters": [
           {
@@ -653,7 +653,7 @@
         "tags": [
           "Accounts"
         ],
-        "description": "This endpoint retrieves the information for an account and its subaccounts.",
+        "description": "This endpoint retrieves the information for an account and its child accounts.",
         "operationId": "fetchAllAccounts",
         "parameters": [
           {
@@ -986,8 +986,7 @@
           }
         },
         "required": [
-          "friendly_name",
-          "description"
+          "friendly_name"
         ]
       },
       "Account": {
@@ -1011,6 +1010,12 @@
           },
           "status": {
             "type": "string",
+            "enum": [
+              "ACTIVE",
+              "PENDING",
+              "DEACTIVATED",
+              "SUSPENDED"
+            ],
             "description": "Status of the account"
           }
         }

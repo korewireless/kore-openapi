@@ -5,8 +5,8 @@ info:
     These APIs facilitate the management of customer accounts and their
     relationships. They support creating accounts, retrieving account
     hierarchies, and managing platform-specific mappings for parent and
-    associated subaccounts. Designed for flexibility and scalability, these APIs
-    ensure efficient handling of account-related data and relationships.
+    associated child accounts. Designed for flexibility and scalability, these
+    APIs ensure efficient handling of account-related data and relationships.
   version: 1.0.0
 paths:
   /v1/platform_account_mappings:
@@ -20,7 +20,7 @@ paths:
         - Accounts
       description: >-
         This endpoint retrieves the platform mappings for an account and its
-        subaccounts.
+        child accounts.
       operationId: fetchAccountMappings
       parameters:
         - name: account_id
@@ -402,8 +402,8 @@ paths:
       tags:
         - Accounts
       description: >-
-        This endpoint retrieves the information for an account and its
-        subaccounts.
+        This endpoint retrieves the information for an account and its child
+        accounts.
       operationId: fetchAllAccounts
       parameters:
         - name: account_id
@@ -610,7 +610,6 @@ components:
           description: Brief description of the account
       required:
         - friendly_name
-        - description
     Account:
       type: object
       properties:
@@ -628,6 +627,11 @@ components:
           description: Friendly name of the account
         status:
           type: string
+          enum:
+            - ACTIVE
+            - PENDING
+            - DEACTIVATED
+            - SUSPENDED
           description: Status of the account
     Platform:
       type: object
