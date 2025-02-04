@@ -17,8 +17,7 @@
   },
   "tags": [
     {
-      "name": "Owner",
-      "x-amazon-apigateway-tag-value": "Webhook"
+      "name": "Secrets"
     }
   ],
   "paths": {
@@ -27,7 +26,7 @@
         "summary": "Create a new secret",
         "description": "Creates a new secret with associated metadata.",
         "tags": [
-          "Webhook"
+          "Secrets"
         ],
         "operationId": "createSecret",
         "parameters": [
@@ -303,7 +302,7 @@
         "summary": "Retrieve a list of secrets",
         "description": "Retrieves a list of secrets, optionally filtered by status.",
         "tags": [
-          "Webhook"
+          "Secrets"
         ],
         "operationId": "getSecrets",
         "parameters": [
@@ -314,13 +313,17 @@
             "required": false,
             "schema": {
               "type": "string",
-              "example": "active"
+              "example": "active",
+              "enum": [
+                "active",
+                "pending"
+              ]
             }
           },
           {
             "name": "page_number",
             "in": "query",
-            "description": "Optional Filter that indicates the current pagination index of the response",
+            "description": "Optional Filter that indicates the current pagination index of the response.",
             "required": false,
             "schema": {
               "type": "integer",
@@ -593,7 +596,7 @@
         "description": "Updates the details of an existing secret specified by `id`.",
         "operationId": "modifySecret",
         "tags": [
-          "Webhook"
+          "Secrets"
         ],
         "parameters": [
           {
@@ -640,6 +643,10 @@
                   },
                   "Status": {
                     "type": "string",
+                    "enum": [
+                      "active",
+                      "pending"
+                    ],
                     "description": "The status of the secret."
                   }
                 }
@@ -879,32 +886,16 @@
   "components": {
     "schemas": {
       "SecretCreated": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SecretResponse"
+          }
+        ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "description": "the id of the secret created",
-            "nullable": false,
-            "minLength": 30,
-            "maxLength": 30,
-            "example": "whs_01jf8c4889ehtbzt0n9mzk1prc"
-          },
-          "name": {
-            "type": "string",
-            "description": "friendly name of the secret",
-            "nullable": false,
-            "example": "my new secret"
-          },
           "secret": {
-            "type": "string"
-          },
-          "status": {
             "type": "string",
-            "example": "pending"
-          },
-          "last_modified": {
-            "type": "string",
-            "format": "date-time"
+            "description": "the value of the secret created, this is generated and provided only once during creation."
           }
         },
         "required": [
@@ -937,7 +928,7 @@
             "example": "active",
             "enum": [
               "active",
-              "Pending"
+              "pending"
             ]
           },
           "last_modified": {
@@ -958,34 +949,12 @@
           "data": {
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "description": "the id of the secret created",
-                  "nullable": false,
-                  "minLength": 30,
-                  "maxLength": 30,
-                  "example": "whs_01jf8c4889ehtbzt0n9mzk1prc"
-                },
-                "name": {
-                  "type": "string",
-                  "description": "friendly name of the secret",
-                  "nullable": false,
-                  "example": "my new secret"
-                },
-                "status": {
-                  "type": "string",
-                  "enum": [
-                    "active",
-                    "pending"
-                  ]
-                },
-                "last_modified": {
-                  "type": "string",
-                  "format": "date-time"
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/SecretResponse"
                 }
-              }
+              ],
+              "type": "object"
             }
           },
           "meta_data": {

@@ -2,7 +2,8 @@
 openapi: 3.0.3
 info:
   title: Webhook APIs
-  description: This is the public Webhook API for creating, retrieving, and modifying
+  description: >-
+    This is the public Webhook API for creating, retrieving, and modifying
     secrets.
   termsOfService: https://pardot.korewireless.com/koremsa
   contact:
@@ -14,29 +15,28 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 tags:
-- name: Owner
-  x-amazon-apigateway-tag-value: Webhook
+  - name: Secrets
 paths:
-  "/v1/secrets":
+  /v1/secrets:
     post:
       summary: Create a new secret
       description: Creates a new secret with associated metadata.
       tags:
-      - Webhook
+        - Secrets
       operationId: createSecret
       parameters:
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-      - name: Accept
-        in: header
-        schema:
-          type: string
-      - name: Content-Type
-        in: header
-        schema:
-          type: string
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          schema:
+            type: string
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -48,7 +48,7 @@ paths:
                   type: string
                   description: A user-friendly name for the secret.
               required:
-              - Name
+                - Name
       responses:
         '201':
           description: Secret created successfully
@@ -68,7 +68,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/SecretCreated"
+                $ref: '#/components/schemas/SecretCreated'
         '400':
           description: Bad Request
           headers:
@@ -87,7 +87,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '401':
           description: Unauthorized
           headers:
@@ -106,7 +106,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '403':
           description: Forbidden
           headers:
@@ -125,7 +125,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '404':
           description: Not Found
           headers:
@@ -144,7 +144,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '405':
           description: Method Not Allowed
           headers:
@@ -163,7 +163,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '500':
           description: Internal Server Error
           headers:
@@ -182,49 +182,54 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
     get:
       summary: Retrieve a list of secrets
       description: Retrieves a list of secrets, optionally filtered by status.
       tags:
-      - Webhook
+        - Secrets
       operationId: getSecrets
       parameters:
-      - name: status
-        in: query
-        description: Filter secrets by their status.
-        required: false
-        schema:
-          type: string
-          example: active
-      - name: page_number
-        in: query
-        description: Optional Filter that indicates the current pagination index of
-          the response
-        required: false
-        schema:
-          type: integer
-          example: 1
-      - name: page_size
-        in: query
-        description: Optional Filter that indicates the total number of records included
-          in the response.
-        required: false
-        schema:
-          type: integer
-          example: 10
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-      - name: Accept
-        in: header
-        schema:
-          type: string
-      - name: Content-Type
-        in: header
-        schema:
-          type: string
+        - name: status
+          in: query
+          description: Filter secrets by their status.
+          required: false
+          schema:
+            type: string
+            example: active
+            enum:
+              - active
+              - pending
+        - name: page_number
+          in: query
+          description: >-
+            Optional Filter that indicates the current pagination index of the
+            response.
+          required: false
+          schema:
+            type: integer
+            example: 1
+        - name: page_size
+          in: query
+          description: >-
+            Optional Filter that indicates the total number of records included
+            in the response.
+          required: false
+          schema:
+            type: integer
+            example: 10
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          schema:
+            type: string
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
       responses:
         '200':
           description: A list of secrets
@@ -244,7 +249,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/PaginatedSecretResponse"
+                $ref: '#/components/schemas/PaginatedSecretResponse'
         '400':
           description: Bad Request
           headers:
@@ -263,7 +268,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '401':
           description: Unauthorized
           headers:
@@ -282,7 +287,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '403':
           description: Forbidden
           headers:
@@ -301,7 +306,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '404':
           description: Not Found
           headers:
@@ -320,7 +325,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '405':
           description: Method Not Allowed
           headers:
@@ -339,7 +344,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '500':
           description: Internal Server Error
           headers:
@@ -358,33 +363,33 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
-  "/v1/secrets/{id}":
+                $ref: '#/components/schemas/ApiErrorResponse'
+  /v1/secrets/{id}:
     patch:
       summary: Modify an existing secret
       description: Updates the details of an existing secret specified by `id`.
       operationId: modifySecret
       tags:
-      - Webhook
+        - Secrets
       parameters:
-      - name: id
-        in: path
-        required: true
-        description: The unique identifier of the secret to be updated.
-        schema:
-          type: string
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-      - name: Accept
-        in: header
-        schema:
-          type: string
-      - name: Content-Type
-        in: header
-        schema:
-          type: string
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the secret to be updated.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          schema:
+            type: string
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -397,6 +402,9 @@ paths:
                   description: A user-friendly name for the secret.
                 Status:
                   type: string
+                  enum:
+                    - active
+                    - pending
                   description: The status of the secret.
       responses:
         '200':
@@ -417,7 +425,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/SecretResponse"
+                $ref: '#/components/schemas/SecretResponse'
         '400':
           description: Bad Request
           headers:
@@ -436,7 +444,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '401':
           description: Unauthorized
           headers:
@@ -455,7 +463,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '403':
           description: Forbidden
           headers:
@@ -474,7 +482,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '404':
           description: Not Found
           headers:
@@ -493,7 +501,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '405':
           description: Method Not Allowed
           headers:
@@ -512,7 +520,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
         '500':
           description: Internal Server Error
           headers:
@@ -531,38 +539,25 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ApiErrorResponse"
+                $ref: '#/components/schemas/ApiErrorResponse'
 components:
   schemas:
     SecretCreated:
+      allOf:
+        - $ref: '#/components/schemas/SecretResponse'
       type: object
       properties:
-        id:
-          type: string
-          description: the id of the secret created
-          nullable: false
-          minLength: 30
-          maxLength: 30
-          example: whs_01jf8c4889ehtbzt0n9mzk1prc
-        name:
-          type: string
-          description: friendly name of the secret
-          nullable: false
-          example: my new secret
         secret:
           type: string
-        status:
-          type: string
-          example: pending
-        last_modified:
-          type: string
-          format: date-time
+          description: >-
+            the value of the secret created, this is generated and provided only
+            once during creation.
       required:
-      - id
-      - name
-      - secret
-      - status
-      - last_modified
+        - id
+        - name
+        - secret
+        - status
+        - last_modified
     SecretResponse:
       type: object
       properties:
@@ -582,44 +577,25 @@ components:
           type: string
           example: active
           enum:
-          - active
-          - Pending
+            - active
+            - pending
         last_modified:
           type: string
           format: date-time
       required:
-      - id
-      - name
-      - status
-      - last_modified
+        - id
+        - name
+        - status
+        - last_modified
     PaginatedSecretResponse:
       type: object
       properties:
         data:
           type: array
           items:
+            allOf:
+              - $ref: '#/components/schemas/SecretResponse'
             type: object
-            properties:
-              id:
-                type: string
-                description: the id of the secret created
-                nullable: false
-                minLength: 30
-                maxLength: 30
-                example: whs_01jf8c4889ehtbzt0n9mzk1prc
-              name:
-                type: string
-                description: friendly name of the secret
-                nullable: false
-                example: my new secret
-              status:
-                type: string
-                enum:
-                - active
-                - pending
-              last_modified:
-                type: string
-                format: date-time
         meta_data:
           type: object
           properties:
@@ -634,13 +610,15 @@ components:
               example: 1
             previous_page_url:
               type: string
-              example: https://webhook.api.korewireless.com/v1/secrets?page_size=1&page_number=2
+              example: >-
+                https://webhook.api.korewireless.com/v1/secrets?page_size=1&page_number=2
             next_page_url:
               type: string
-              example: https://webhook.api.korewireless.com/v1/secrets?page_size=1&page_number=4
+              example: >-
+                https://webhook.api.korewireless.com/v1/secrets?page_size=1&page_number=4
       required:
-      - data
-      - meta_data
+        - data
+        - meta_data
     ApiErrorResponse:
       type: object
       properties:
@@ -662,9 +640,9 @@ components:
           description: Internal Error Message Reference
           example: http//docs.korewireless.com/errors/30010
       required:
-      - code
-      - status
-      - message
+        - code
+        - status
+        - message
   securitySchemes:
     Auth:
       type: oauth2
@@ -673,8 +651,8 @@ components:
           tokenUrl: https://api.korewireless.com/api-services/v1/auth/token
           scopes: {}
 security:
-- {}
-- Auth: []
+  - {}
+  - Auth: []
 x-hideTryItPanel: true
 servers:
-- url: https://webhook.api.korewireless.com
+  - url: https://webhook.api.korewireless.com
