@@ -1,0 +1,658 @@
+---
+openapi: 3.0.3
+info:
+  title: Webhook APIs
+  description: >-
+    This is the public Webhook API for creating, retrieving, and modifying
+    secrets.
+  termsOfService: https://pardot.korewireless.com/koremsa
+  contact:
+    name: KORE Support
+    url: https://korewireless.service-now.com/csm
+    email: support@korewireless.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+tags:
+  - name: Secrets
+paths:
+  /v1/secrets:
+    post:
+      summary: Create a new secret
+      description: Creates a new secret with associated metadata.
+      tags:
+        - Secrets
+      operationId: createSecret
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          schema:
+            type: string
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Name:
+                  type: string
+                  description: A user-friendly name for the secret.
+              required:
+                - Name
+      responses:
+        '201':
+          description: Secret created successfully
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretCreated'
+        '400':
+          description: Bad Request
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '401':
+          description: Unauthorized
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: Forbidden
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: Not Found
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '405':
+          description: Method Not Allowed
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '500':
+          description: Internal Server Error
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+    get:
+      summary: Retrieve a list of secrets
+      description: Retrieves a list of secrets, optionally filtered by status.
+      tags:
+        - Secrets
+      operationId: getSecrets
+      parameters:
+        - name: status
+          in: query
+          description: Filter secrets by their status.
+          required: false
+          schema:
+            type: string
+            example: active
+            enum:
+              - active
+              - pending
+        - name: page_number
+          in: query
+          description: >-
+            Optional Filter that indicates the current pagination index of the
+            response.
+          required: false
+          schema:
+            type: integer
+            example: 1
+        - name: page_size
+          in: query
+          description: >-
+            Optional Filter that indicates the total number of records included
+            in the response.
+          required: false
+          schema:
+            type: integer
+            example: 10
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          schema:
+            type: string
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of secrets
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSecretResponse'
+        '400':
+          description: Bad Request
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '401':
+          description: Unauthorized
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: Forbidden
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: Not Found
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '405':
+          description: Method Not Allowed
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '500':
+          description: Internal Server Error
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+  /v1/secrets/{id}:
+    patch:
+      summary: Modify an existing secret
+      description: Updates the details of an existing secret specified by `id`.
+      operationId: modifySecret
+      tags:
+        - Secrets
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the secret to be updated.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+        - name: Accept
+          in: header
+          schema:
+            type: string
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Name:
+                  type: string
+                  description: A user-friendly name for the secret.
+                Status:
+                  type: string
+                  enum:
+                    - active
+                    - pending
+                  description: The status of the secret.
+      responses:
+        '200':
+          description: Secret updated successfully
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretResponse'
+        '400':
+          description: Bad Request
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '401':
+          description: Unauthorized
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: Forbidden
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '404':
+          description: Not Found
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '405':
+          description: Method Not Allowed
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '500':
+          description: Internal Server Error
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+components:
+  schemas:
+    SecretCreated:
+      allOf:
+        - $ref: '#/components/schemas/SecretResponse'
+      type: object
+      properties:
+        secret:
+          type: string
+          description: >-
+            the value of the secret created, this is generated and provided only
+            once during creation.
+      required:
+        - id
+        - name
+        - secret
+        - status
+        - last_modified
+    SecretResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: the id of the secret created
+          nullable: false
+          minLength: 30
+          maxLength: 30
+          example: whs_01jf8c4889ehtbzt0n9mzk1prc
+        name:
+          type: string
+          description: friendly name of the secret
+          nullable: false
+          example: my new secret
+        status:
+          type: string
+          example: active
+          enum:
+            - active
+            - pending
+        last_modified:
+          type: string
+          format: date-time
+      required:
+        - id
+        - name
+        - status
+        - last_modified
+    PaginatedSecretResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/SecretResponse'
+            type: object
+        meta_data:
+          type: object
+          properties:
+            count:
+              type: integer
+              example: 1
+            page_size:
+              type: integer
+              example: 10
+            page_number:
+              type: integer
+              example: 1
+            previous_page_url:
+              type: string
+              example: >-
+                https://webhook.api.korewireless.com/v1/secrets?page_size=1&page_number=2
+            next_page_url:
+              type: string
+              example: >-
+                https://webhook.api.korewireless.com/v1/secrets?page_size=1&page_number=4
+      required:
+        - data
+        - meta_data
+    ApiErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+          description: HTTP Status Code
+          example: 403
+        code:
+          type: integer
+          format: int32
+          example: 30010
+        message:
+          type: string
+          description: Error Message
+          example: Resource access is forbidden
+        info:
+          type: string
+          description: Internal Error Message Reference
+          example: http//docs.korewireless.com/errors/30010
+      required:
+        - code
+        - status
+        - message
+  securitySchemes:
+    Auth:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.korewireless.com/api-services/v1/auth/token
+          scopes: {}
+security:
+  - {}
+  - Auth: []
+x-hideTryItPanel: true
+servers:
+  - url: https://webhook.api.korewireless.com
