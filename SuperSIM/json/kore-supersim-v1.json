@@ -4317,7 +4317,7 @@
           {
             "lang": "cURL",
             "label": "cURL",
-            "source": "curl -X POST \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<Sid>/Networks\" -H \"Content-Type: application/x-www-form-urlencoded\" -H \"Authorization: Bearer <YOUR_AUTH_TOKEN>\" --data-urlencode \"Networks=<NETWORK_SID>\"\n"
+            "source": "curl -X POST \"https://supersim.api.korewireless.com/v1/NetworkAccessProfiles/<Sid>/Networks\" -H \"Content-Type: application/x-www-form-urlencoded\" -H \"Authorization: Bearer <YOUR_AUTH_TOKEN>\" --data-urlencode \"Network=<NETWORK_SID>\"\n"
           },
           {
             "lang": "NodeJs",
