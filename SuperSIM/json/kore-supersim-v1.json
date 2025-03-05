@@ -2828,11 +2828,11 @@
           {
             "name": "PageSize",
             "in": "query",
-            "description": "How many resources to return in each list page. The default is 50, and the maximum is 1000.",
+            "description": "How many resources to return in each list page. The default is 50, and the maximum is 100.",
             "schema": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 1000
+              "maximum": 100
             }
           },
           {
@@ -6735,11 +6735,11 @@
           {
             "name": "PageSize",
             "in": "query",
-            "description": "How many resources to return in each list page. The default is 50, and the maximum is 1000.",
+            "description": "How many resources to return in each list page. The default is 50, and the maximum is 249.",
             "schema": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 1000
+              "maximum": 249
             }
           },
           {
