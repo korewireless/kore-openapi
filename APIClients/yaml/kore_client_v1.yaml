@@ -816,6 +816,12 @@ components:
     CreateClient:
       type: object
       properties:
+        account_id:
+          type: string
+          example: acct_012example
+          description: >-
+            ID of the account the client belongs to. Defaults to the
+            clientCred's account scope if not specified.
         name:
           type: string
           description: Name of the client.
@@ -840,6 +846,7 @@ components:
         - name
         - locked
       example:
+        account_id: acct_012example
         name: Example Client
         locked: false
         scopes:
