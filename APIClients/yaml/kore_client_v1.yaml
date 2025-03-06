@@ -869,7 +869,9 @@ components:
         client_type:
           type: string
           example: standard
-          description: Type of the client, either 'admin' or 'standard'.
+          enum:
+            - standard
+          description: Type of the client. This will always be 'standard'.
         account_id:
           type: string
           example: acct_012example
