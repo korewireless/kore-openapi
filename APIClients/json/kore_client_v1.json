@@ -1321,7 +1321,8 @@
         },
         "required": [
           "name",
-          "locked"
+          "locked",
+          "scopes"
         ],
         "example": {
           "account_id": "acct_012example",
@@ -1332,7 +1333,8 @@
               "SuperSIM"
             ]
           }
-        }
+        },
+        "additionalProperties": false
       },
       "201CreateClient": {
         "type": "object",
