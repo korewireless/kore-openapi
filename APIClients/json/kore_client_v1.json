@@ -1351,6 +1351,11 @@
             "type": "string",
             "description": "The unique identifier secret assigned to the newly created client."
           },
+          "client_type": {
+            "type": "string",
+            "example": "standard",
+            "description": "Type of the client, either 'admin' or 'standard'."
+          },
           "account_id": {
             "type": "string",
             "example": "acct_012example",
