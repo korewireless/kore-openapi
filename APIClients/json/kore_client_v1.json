@@ -1321,7 +1321,8 @@
         },
         "required": [
           "name",
-          "locked"
+          "locked",
+          "scopes"
         ],
         "example": {
           "account_id": "acct_012example",
@@ -1332,7 +1333,8 @@
               "SuperSIM"
             ]
           }
-        }
+        },
+        "additionalProperties": false
       },
       "201CreateClient": {
         "type": "object",
@@ -1348,6 +1350,11 @@
           "client_secret": {
             "type": "string",
             "description": "The unique identifier secret assigned to the newly created client."
+          },
+          "client_type": {
+            "type": "string",
+            "enum": ["standard"],
+            "description": "Type of the client. This will always be 'standard'."
           },
           "account_id": {
             "type": "string",

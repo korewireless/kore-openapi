@@ -845,6 +845,7 @@ components:
       required:
         - name
         - locked
+        - scopes
       example:
         account_id: acct_012example
         name: Example Client
@@ -852,6 +853,7 @@ components:
         scopes:
           products:
             - SuperSIM
+      additionalProperties: false
     201CreateClient:
       type: object
       properties:
@@ -864,6 +866,12 @@ components:
         client_secret:
           type: string
           description: The unique identifier secret assigned to the newly created client.
+        client_type:
+          type: string
+          example: standard
+          enum:
+            - standard
+          description: Type of the client. This will always be 'standard'.
         account_id:
           type: string
           example: acct_012example
