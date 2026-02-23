@@ -1,0 +1,90 @@
+[
+  {
+    "id": "api-clients-client-v1",
+    "product": "api-clients",
+    "version": "v1",
+    "yaml": "specs/api-clients/yaml/kore_client_v1.yaml",
+    "json": "specs/api-clients/json/kore_client_v1.json",
+    "base_url": "https://client.api.korewireless.com",
+    "portal": "build-portal",
+    "token_url": "https://api.korewireless.com/api-services/v1/auth/token",
+    "docs_url": "https://docs.korewireless.com/en-us/api/products/api-clients/clients"
+  },
+  {
+    "id": "api-clients-token-v1",
+    "product": "api-clients",
+    "version": "v1",
+    "yaml": "specs/api-clients/yaml/kore_token_api_v1.yaml",
+    "json": "specs/api-clients/json/kore_token_api_v1.json",
+    "base_url": "https://api.korewireless.com/api-services",
+    "portal": "build-portal",
+    "token_url": "https://api.korewireless.com/api-services/v1/auth/token",
+    "docs_url": "https://docs.korewireless.com/en-us/api/products/api-clients/v1-token"
+  },
+  {
+    "id": "connectivity-pro-v1",
+    "product": "connectivity-pro",
+    "version": "v1",
+    "yaml": "specs/connectivity-pro/yaml/kore-connectivity-pro-v1.yaml",
+    "json": "specs/connectivity-pro/json/kore-connectivity-pro-v1.json",
+    "base_url": "https://api.korewireless.com/connectivity",
+    "portal": "developer-portal",
+    "token_url": "https://api.korewireless.com/Api/api/token",
+    "docs_url": "https://developer.korewireless.com/"
+  },
+  {
+    "id": "iam-v1",
+    "product": "iam",
+    "version": "v1",
+    "yaml": "specs/iam/yaml/kore-iam-v1.yaml",
+    "json": "specs/iam/json/kore-iam-v1.json",
+    "base_url": "https://iam.api.korewireless.com",
+    "portal": "build-portal",
+    "token_url": "https://api.korewireless.com/api-services/v1/auth/token",
+    "docs_url": "https://docs.korewireless.com/en-us/api/products/iam/account"
+  },
+  {
+    "id": "programmable-wireless-v1",
+    "product": "programmable-wireless",
+    "version": "v1",
+    "yaml": "specs/programmable-wireless/yaml/kore-programmable-wireless-v1.yaml",
+    "json": "specs/programmable-wireless/json/kore-programmable-wireless-v1.json",
+    "base_url": "https://programmable-wireless.api.korewireless.com",
+    "portal": "build-portal",
+    "token_url": "https://api.korewireless.com/api-services/v1/auth/token",
+    "docs_url": "https://docs.korewireless.com/en-us/api/products/programmable-wireless"
+  },
+  {
+    "id": "sms-v1",
+    "product": "sms",
+    "version": "v1",
+    "yaml": "specs/sms/yaml/kore-sms-v1.yaml",
+    "json": "specs/sms/json/kore-sms-v1.json",
+    "base_url": "https://api.korewireless.com/sms",
+    "portal": "developer-portal",
+    "token_url": "https://api.korewireless.com/Api/api/token",
+    "docs_url": "https://developer.korewireless.com/"
+  },
+  {
+    "id": "supersim-v1",
+    "product": "supersim",
+    "version": "v1",
+    "yaml": "specs/supersim/yaml/kore-supersim-v1.yaml",
+    "json": "specs/supersim/json/kore-supersim-v1.json",
+    "base_url": "https://supersim.api.korewireless.com",
+    "portal": "build-portal",
+    "token_url": "https://api.korewireless.com/api-services/v1/auth/token",
+    "docs_url": "https://docs.korewireless.com/en-us/api/products/supersim"
+  },
+  {
+    "id": "webhook-v1",
+    "product": "webhook",
+    "version": "v1",
+    "yaml": "specs/webhook/yaml/kore-webhook-v1.yaml",
+    "json": "specs/webhook/json/kore-webhook-v1.json",
+    "base_url": "https://webhook.api.korewireless.com",
+    "portal": "build-portal",
+    "token_url": "https://api.korewireless.com/api-services/v1/auth/token",
+    "docs_url": "https://docs.korewireless.com/en-us/api/products/webhook/secret"
+  }
+]

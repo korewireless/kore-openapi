@@ -1,0 +1,1036 @@
+openapi: 3.0.1
+info:
+  title: SMS API
+  description: SMS API allows you to programmatically exchange short messages (SMS) with your devices.<br> Please see the <a href="https://korewireless.service-now.com/kb_view.do?sysparm_article=KB0011208" style="text-decoration:none" target="_blank">SMS API Guide</a> for more details on how to use and supported Service Types.
+  version: 1.0.0
+servers:
+- url: https://api.korewireless.com/sms
+  description: Production
+security:
+- {}
+- Auth: []
+- api_key: []
+tags:
+- name: Messages
+  description: API to send message to the SIMs about any software upgrade/similar things.
+paths:
+  /v1/messages/send:
+    post:
+      tags:
+      - Messages
+      summary: Send new message
+      description: Customers can use this to send an SMS to their SIMs in ConnectivityPro.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                from:
+                  type: string
+                  description: " Optional, if omitted the short-code associated with the service type will automatically be set as the Originating Address of the SMS. \n\n ‎"
+                subscription-id:
+                  type: string
+                  description: "Optional and mutually exclusive with msisdn and iccid; recommended for use. \n **Note:** At least one of the parameters (subscription-id, iccid, or msisdn) must be used.\n\n ‎"
+                iccid:
+                  type: string
+                  description: "Optional and mutually exclusive with subscription-id and msisdn; recommended for use. \n **Note:** At least one of the parameters (subscription-id, iccid, or msisdn) must be used. \n\n ‎"
+                msisdn:
+                  type: string
+                  description: "Optional and mutually exclusive with subscription-id and iccid; not recommended to be used due to potential change of MSISDN during the SIM lifecycle and unavailability of MSISDN  for some Service Types. \n **Note:** At least one of the parameters (subscription-id, iccid, or msisdn) must be used. \n\n ‎"
+                message:
+                  type: string
+                  description: The message body of the SMS.
+              required:
+              - message
+              $$ref: '#/components/schemas/Sendnewmessage0'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mid:
+                    type: string
+                    description: ID for the accepted requests.
+                  code:
+                    type: integer
+                    description: code
+                  message:
+                    type: string
+                    description: message
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/200Sendnewmessage0'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/400Sendnewmessage0'
+        '401':
+          description: Unauthorised User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/401Sendnewmessage0'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/403Sendnewmessage0'
+        '404':
+          description: The Specified Resource Was Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/404Sendnewmessage0'
+        '422':
+          description: Unprocessable content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/422Sendnewmessage0'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/422Sendnewmessage0'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/500Sendnewmessage0'
+      parameters:
+      - required: true
+        description: Account ID to which the SIM receiving the SMS belongs to.
+        name: account-id
+        in: query
+        schema:
+          type: string
+      x-code-samples:
+      - lang: cURL
+        label: cURL
+        source: "curl --location --globoff '{{baseUrl}}/v1/messages/send?account-id=<string>' \\\n--header 'Content-Type: application/json'\n--header 'Authorization: Bearer <YOUR BEARER TOKEN>' \n--header 'x-api-key: <YOUR API KEY>'\n--header 'Accept: application/json' \\\n--data '{\n  \"message\": \"<string>\",\n  \"from\": \"<string>\",\n  \"subscription-id\": \"<string>\",\n  \"iccid\": \"<string>\",\n  \"msisdn\": \"<string>\"\n}'"
+      - lang: js
+        label: NodeJs
+        source: "var request = require('request');\nvar options = {\n   'method': 'POST',\n   'url': '{{baseUrl}}/v1/messages/send?account-id=<string>',\n   'headers': {\n      'Content-Type': 'application/json',\n      'Accept': 'application/json'\n   },\n   body: JSON.stringify({\n      \"message\": \"<string>\",\n      \"from\": \"<string>\",\n      \"subscription-id\": \"<string>\",\n      \"iccid\": \"<string>\",\n      \"msisdn\": \"<string>\"\n   })\n\n};\nrequest(options, function (error, response) {\n   if (error) throw new Error(error);\n   console.log(response.body);\n});\n"
+      - lang: java
+        label: Java
+        source: "OkHttpClient client = new OkHttpClient().newBuilder()\n   .build();\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\n  \\\"message\\\": \\\"<string>\\\",\\n  \\\"from\\\": \\\"<string>\\\",\\n  \\\"subscription-id\\\": \\\"<string>\\\",\\n  \\\"iccid\\\": \\\"<string>\\\",\\n  \\\"msisdn\\\": \\\"<string>\\\"\\n}\");\nRequest request = new Request.Builder()\n   .url(\"{{baseUrl}}/v1/messages/send?account-id=<string>\")\n   .method(\"POST\", body)\n   .addHeader(\"Authorization\", \"Bearer <YOUR BEARER TOKEN>\")\n   .addHeader(\"x-api-key\", \"<YOUR API KEY>\")\n   .addHeader(\"Content-Type\", \"application/json\")\n   .addHeader(\"Accept\", \"application/json\")\n   .build();\nResponse response = client.newCall(request).execute();"
+      - lang: cs
+        label: C#
+        source: "var options = new RestClientOptions(\"{{baseUrl}}/v1/messages/send?account-id=<string>\")\n{\n   MaxTimeout = -1,\n};\nvar client = new RestClient(options);\nvar request = new RestRequest(\"\", Method.Post);\nrequest.AddHeader(\"Content-Type\", \"application/json\");\nrequest.AddHeader(\"Accept\", \"application/json\");\nvar body = @\"{\" + \"\\n\" +\n@\"  \"\"message\"\": \"\"<string>\"\",\" + \"\\n\" +\n@\"  \"\"from\"\": \"\"<string>\"\",\" + \"\\n\" +\n@\"  \"\"subscription-id\"\": \"\"<string>\"\",\" + \"\\n\" +\n@\"  \"\"iccid\"\": \"\"<string>\"\",\" + \"\\n\" +\n@\"  \"\"msisdn\"\": \"\"<string>\"\"\" + \"\\n\" +\n@\"}\";\nrequest.AddStringBody(body, DataFormat.Json);\nRestResponse response = await client.ExecuteAsync(request);\nConsole.WriteLine(response.Content);"
+      - lang: PHP
+        label: Php
+        source: "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, array(\n   CURLOPT_URL => '{{baseUrl}}/v1/messages/send?account-id=<string>',\n   CURLOPT_RETURNTRANSFER => true,\n   CURLOPT_ENCODING => '',\n   CURLOPT_MAXREDIRS => 10,\n   CURLOPT_TIMEOUT => 0,\n   CURLOPT_FOLLOWLOCATION => true,\n   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n   CURLOPT_CUSTOMREQUEST => 'POST',\n   CURLOPT_HTTPHEADER => array(\n   'Content-Type: application/json',\n   'Authorization: Bearer <YOUR BEARER TOKEN>',\n   'x-api-key: <YOUR API KEY>'),\n   CURLOPT_POSTFIELDS =>'{\n  \"message\": \"<string>\",\n  \"from\": \"<string>\",\n  \"subscription-id\": \"<string>\",\n  \"iccid\": \"<string>\",\n  \"msisdn\": \"<string>\"\n}',\n   CURLOPT_HTTPHEADER => array(\n      'Content-Type: application/json',\n      'Accept: application/json'\n   ),\n));\n\n$response = curl_exec($curl);\n\ncurl_close($curl);\necho $response;\n"
+      - lang: py
+        label: Python
+        source: "import requests\nimport json\n\nurl = \"{{baseUrl}}/v1/messages/send?account-id=<string>\"\n\npayload = json.dumps({\n   \"message\": \"<string>\",\n   \"from\": \"<string>\",\n   \"subscription-id\": \"<string>\",\n   \"iccid\": \"<string>\",\n   \"msisdn\": \"<string>\"\n})\nheaders = {\n   'Content-Type': 'application/json',\n   'Accept': 'application/json'\n}\n\nresponse = requests.request(\"POST\", url, headers=headers, data=payload)\n\nprint(response.text)\n"
+      security:
+      - {}
+      - Auth: []
+      - api_key: []
+  /v1/sms/messages:
+    get:
+      tags:
+      - Messages
+      summary: Get Messages (To be deprecated soon)
+      description: To perform a ‘Search’ operation for specific messages
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        short-code:
+                          type: string
+                          description: short-code
+                        iccid:
+                          type: string
+                          description: iccid
+                        account-id:
+                          type: string
+                          description: account-id
+                        organization:
+                          type: string
+                          description: organization
+                        mid:
+                          type: string
+                          description: mid
+                        action:
+                          type: string
+                          description: action
+                        detail:
+                          type: string
+                          description: detail
+                        msisdn:
+                          type: string
+                          description: msisdn
+                        service-type-id:
+                          type: integer
+                          description: service-type-id
+                        date-created:
+                          type: string
+                          description: date-created
+                        status:
+                          type: string
+                          description: status
+                    description: messages
+                  page-info-result:
+                    type: object
+                    properties:
+                      total-count:
+                        type: integer
+                        description: ' total count'
+                      page-index:
+                        type: integer
+                        description: Number of results per page
+                      max-page-item:
+                        type: integer
+                        description: ' Page number for pagination'
+                    description: page-info-result
+                $$ref: '#/components/schemas/200GetMessages0'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/400GetMessages0'
+        '401':
+          description: Unauthorised User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/401GetMessages0'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/403GetMessages0'
+        '404':
+          description: response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/404GetMessages0'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/500GetMessages0'
+      parameters:
+      - name: account-id
+        description: Unique identifier for the account associated with the messages you want to retrieve
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: msisdn
+        description: 'For Mobile Terminated (MT) SMS, this is the MSISDN of the recipient to which the SMS is being sent. For Mobile Originated (MO) SMS, this is the device''s MSISDN from which the SMS has been received.
+
+
+          Please be noted that MSISDN and ICCID are mutually exclusive.User is supposed to provide either ICCID or MSISDN as input parameter. If both
+
+          are provided as inputs, ICCID will be preferred to query the output.'
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: iccid
+        description: 'For Mobile Terminated (MT) SMS, this is the ICCID of the recipient to which the SMS is being sent.
+
+          For Mobile Originated (MO) SMS, this is the device''s ICCID from which the SMS has been received.
+
+
+          Please be noted that MSISDN and ICCID are mutually exclusive.User is supposed to provide either ICCID or MSISDN as input parameter. If both
+
+          are provided as inputs, ICCID will be preferred to query the output.'
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: from-date
+        description: 'The "from-date" should be in YYYY-MM-DD format and is in the ''UTC'' time zone. Use this parameter to retrieve SMS data for a specific time interval. The SMS API will return data for any SMS sent or received on or after this date.
+
+          For Mobile Terminated (MT) SMS, it represents the ''Sent'' date. For Mobile Originated (MO) SMS, it represents the ''Received'' date from the mobile network.'
+        in: query
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: to-date
+        description: 'The "to-date" should be in YYYY-MM-DD format and is in the ''UTC'' time zone. Use this parameter to retrieve SMS data for a specific time interval. If no "to-date" is specified, the query will return all SMS data up to the current date and time.
+
+          For Mobile Terminated (MT) SMS, it represents the ''Sent'' date. For Mobile Originated (MO) SMS, it represents the ''Received'' date.'
+        in: query
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: direction
+        description: Specifies whether the message was sent by the device (Mobile Originated SMS) or received by the device (Mobile Terminated SMS). "from_sim" indicates a sent message (Mobile Originated), while "to_sim" indicates a received message (Mobile Terminated).
+        required: false
+        schema:
+          type: string
+          enum:
+          - to_sim
+          - from_sim
+      - name: mid
+        description: A unique identifier for the SMS message you want to retrieve
+        in: query
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: page-index
+        description: Page number for pagination
+        required: false
+        example: '1'
+        schema:
+          type: number
+          default: '1'
+      - in: query
+        name: max-page-item
+        description: Number of results per page
+        required: false
+        example: '10'
+        schema:
+          type: number
+          default: '10'
+      - in: query
+        name: sort-order
+        description: Sorting is applied based on the sent or received dates of SMS messages.
+        required: false
+        example: desc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      x-code-samples:
+      - lang: cURL
+        label: cURL
+        source: 'curl --location --globoff ''{{baseUrl}}/v1/sms/messages?account-id=<string>&msisdn=<string>&iccid=<string>&from-date=<string>&to-date=<string>&direction=<string>&mid=<string>&page-index=1&max-page-item=10&sort-order=desc'' \
+
+          --header ''Accept: application/json'''
+      - lang: js
+        label: NodeJs
+        source: "var request = require('request');\nvar options = {\n   'method': 'GET',\n   'url': '{{baseUrl}}/v1/sms/messages?account-id=<string>&msisdn=<string>&iccid=<string>&from-date=<string>&to-date=<string>&direction=<string>&mid=<string>&page-index=1&max-page-item=10&sort-order=desc',\n   'headers': {\n      'Accept': 'application/json'\n   }\n};\nrequest(options, function (error, response) {\n   if (error) throw new Error(error);\n   console.log(response.body);\n});\n"
+      - lang: java
+        label: Java
+        source: "OkHttpClient client = new OkHttpClient().newBuilder()\n   .build();\nMediaType mediaType = MediaType.parse(\"text/plain\");\nRequestBody body = RequestBody.create(mediaType, \"\");\nRequest request = new Request.Builder()\n   .url(\"{{baseUrl}}/v1/sms/messages?account-id=<string>&msisdn=<string>&iccid=<string>&from-date=<string>&to-date=<string>&direction=<string>&mid=<string>&page-index=1&max-page-item=10&sort-order=desc\")\n   .method(\"GET\", body)\n   .addHeader(\"Accept\", \"application/json\")\n   .build();\nResponse response = client.newCall(request).execute();"
+      - lang: cs
+        label: C#
+        source: "var options = new RestClientOptions(\"{{baseUrl}}/v1/sms/messages?account-id=<string>&msisdn=<string>&iccid=<string>&from-date=<string>&to-date=<string>&direction=<string>&mid=<string>&page-index=1&max-page-item=10&sort-order=desc\")\n{\n   MaxTimeout = -1,\n};\nvar client = new RestClient(options);\nvar request = new RestRequest(\"\", Method.Get);\nrequest.AddHeader(\"Accept\", \"application/json\");\nRestResponse response = await client.ExecuteAsync(request);\nConsole.WriteLine(response.Content);"
+      - lang: PHP
+        label: Php
+        source: "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, array(\n   CURLOPT_URL => '{{baseUrl}}/v1/sms/messages?account-id=<string>&msisdn=<string>&iccid=<string>&from-date=<string>&to-date=<string>&direction=<string>&mid=<string>&page-index=1&max-page-item=10&sort-order=desc',\n   CURLOPT_RETURNTRANSFER => true,\n   CURLOPT_ENCODING => '',\n   CURLOPT_MAXREDIRS => 10,\n   CURLOPT_TIMEOUT => 0,\n   CURLOPT_FOLLOWLOCATION => true,\n   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n   CURLOPT_CUSTOMREQUEST => 'GET',\n   CURLOPT_HTTPHEADER => array(\n   'Authorization: Bearer <YOUR BEARER TOKEN>',\n   'x-api-key: <YOUR API KEY>')\n   CURLOPT_HTTPHEADER => array(\n      'Accept: application/json'\n   ),\n));\n\n$response = curl_exec($curl);\n\ncurl_close($curl);\necho $response;\n"
+      - lang: py
+        label: Python
+        source: "import requests\n\nurl = \"{{baseUrl}}/v1/sms/messages?account-id=<string>&msisdn=<string>&iccid=<string>&from-date=<string>&to-date=<string>&direction=<string>&mid=<string>&page-index=1&max-page-item=10&sort-order=desc\"\n\npayload = {}\nheaders = {\n   'Accept': 'application/json'\n}\n\nresponse = requests.request(\"GET\", url, headers=headers, data=payload)\n\nprint(response.text)\n"
+      security:
+      - {}
+      - Auth: []
+      - api_key: []
+  /v1/messages:
+    get:
+      tags:
+      - Messages
+      summary: Get Messages
+      description: To perform a ‘Search’ operation for specific messages
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        short-code:
+                          type: string
+                          description: short-code
+                        iccid:
+                          type: string
+                          description: iccid
+                        account-id:
+                          type: string
+                          description: account-id
+                        organization:
+                          type: string
+                          description: organization
+                        mid:
+                          type: string
+                          description: mid
+                        action:
+                          type: string
+                          description: action
+                        detail:
+                          type: string
+                          description: detail
+                        msisdn:
+                          type: string
+                          description: msisdn
+                        service-type-id:
+                          type: integer
+                          description: service-type-id
+                        date-created:
+                          type: string
+                          description: date-created
+                        status:
+                          type: string
+                          description: status
+                    description: messages
+                  page-info-result:
+                    type: object
+                    properties:
+                      total-count:
+                        type: integer
+                        description: ' total count'
+                      page-index:
+                        type: integer
+                        description: Number of results per page
+                      max-page-item:
+                        type: integer
+                        description: ' Page number for pagination'
+                    description: page-info-result
+                $$ref: '#/components/schemas/200GetMessages0'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/400GetMessages0'
+        '401':
+          description: Unauthorised User
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/401GetMessages0'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/403GetMessages0'
+        '404':
+          description: response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/404GetMessages0'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: message
+                  code:
+                    type: integer
+                    description: code
+                  status:
+                    type: string
+                    description: status
+                $$ref: '#/components/schemas/500GetMessages0'
+      parameters:
+      - name: account-id
+        description: Unique identifier for the account associated with the messages you want to retrieve
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: msisdn
+        description: 'For Mobile Terminated (MT) SMS, this is the MSISDN of the recipient to which the SMS is being sent. For Mobile Originated (MO) SMS, this is the device''s MSISDN from which the SMS has been received.
+
+
+          Please be noted that MSISDN and ICCID are mutually exclusive.User is supposed to provide either ICCID or MSISDN as input parameter. If both
+
+          are provided as inputs, ICCID will be preferred to query the output.'
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: iccid
+        description: 'For Mobile Terminated (MT) SMS, this is the ICCID of the recipient to which the SMS is being sent.
+
+          For Mobile Originated (MO) SMS, this is the device''s ICCID from which the SMS has been received.
+
+
+          Please be noted that MSISDN and ICCID are mutually exclusive.User is supposed to provide either ICCID or MSISDN as input parameter. If both
+
+          are provided as inputs, ICCID will be preferred to query the output.'
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: from-date
+        description: 'The "from-date" should be in YYYY-MM-DD format and is in the ''UTC'' time zone. Use this parameter to retrieve SMS data for a specific time interval. The SMS API will return data for any SMS sent or received on or after this date.
+
+          For Mobile Terminated (MT) SMS, it represents the ''Sent'' date. For Mobile Originated (MO) SMS, it represents the ''Received'' date from the mobile network.'
+        in: query
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: to-date
+        description: 'The "to-date" should be in YYYY-MM-DD format and is in the ''UTC'' time zone. Use this parameter to retrieve SMS data for a specific time interval. If no "to-date" is specified, the query will return all SMS data up to the current date and time.
+
+          For Mobile Terminated (MT) SMS, it represents the ''Sent'' date. For Mobile Originated (MO) SMS, it represents the ''Received'' date.'
+        in: query
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: direction
+        description: Specifies whether the message was sent by the device (Mobile Originated SMS) or received by the device (Mobile Terminated SMS). "from_sim" indicates a sent message (Mobile Originated), while "to_sim" indicates a received message (Mobile Terminated).
+        required: false
+        schema:
+          type: string
+          enum:
+          - to_sim
+          - from_sim
+      - name: mid
+        description: A unique identifier for the SMS message you want to retrieve
+        in: query
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: page-index
+        description: Page number for pagination
+        required: false
+        example: '1'
+        schema:
+          type: number
+          default: '1'
+      - in: query
+        name: max-page-item
+        description: Number of results per page
+        required: false
+        example: '10'
+        schema:
+          type: number
+          default: '10'
+      - in: query
+        name: sort-order
+        description: Sorting is applied based on the sent or received dates of SMS messages.
+        required: false
+        example: desc
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      x-code-samples:
+      - lang: cURL
+        label: cURL
+        source: 'curl --location --globoff ''{{baseUrl}}/v1/messages?account-id=<string>&msisdn=<string>&iccid=<string>&from-date=<string>&to-date=<string>&direction=<string>&mid=<string>&page-index=1&max-page-item=10&sort-order=desc'' \
+
+          --header ''Accept: application/json'''
+      - lang: js
+        label: NodeJs
+        source: "var request = require('request');\nvar options = {\n   'method': 'GET',\n   'url': '{{baseUrl}}/v1/messages?account-id=<string>&msisdn=<string>&iccid=<string>&from-date=<string>&to-date=<string>&direction=<string>&mid=<string>&page-index=1&max-page-item=10&sort-order=desc',\n   'headers': {\n      'Accept': 'application/json'\n   }\n};\nrequest(options, function (error, response) {\n   if (error) throw new Error(error);\n   console.log(response.body);\n});\n"
+      - lang: java
+        label: Java
+        source: "OkHttpClient client = new OkHttpClient().newBuilder()\n   .build();\nMediaType mediaType = MediaType.parse(\"text/plain\");\nRequestBody body = RequestBody.create(mediaType, \"\");\nRequest request = new Request.Builder()\n   .url(\"{{baseUrl}}/v1/messages?account-id=<string>&msisdn=<string>&iccid=<string>&from-date=<string>&to-date=<string>&direction=<string>&mid=<string>&page-index=1&max-page-item=10&sort-order=desc\")\n   .method(\"GET\", body)\n   .addHeader(\"Accept\", \"application/json\")\n   .build();\nResponse response = client.newCall(request).execute();"
+      - lang: cs
+        label: C#
+        source: "var options = new RestClientOptions(\"{{baseUrl}}/v1/messages?account-id=<string>&msisdn=<string>&iccid=<string>&from-date=<string>&to-date=<string>&direction=<string>&mid=<string>&page-index=1&max-page-item=10&sort-order=desc\")\n{\n   MaxTimeout = -1,\n};\nvar client = new RestClient(options);\nvar request = new RestRequest(\"\", Method.Get);\nrequest.AddHeader(\"Accept\", \"application/json\");\nRestResponse response = await client.ExecuteAsync(request);\nConsole.WriteLine(response.Content);"
+      - lang: PHP
+        label: Php
+        source: "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, array(\n   CURLOPT_URL => '{{baseUrl}}/v1/messages?account-id=<string>&msisdn=<string>&iccid=<string>&from-date=<string>&to-date=<string>&direction=<string>&mid=<string>&page-index=1&max-page-item=10&sort-order=desc',\n   CURLOPT_RETURNTRANSFER => true,\n   CURLOPT_ENCODING => '',\n   CURLOPT_MAXREDIRS => 10,\n   CURLOPT_TIMEOUT => 0,\n   CURLOPT_FOLLOWLOCATION => true,\n   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n   CURLOPT_CUSTOMREQUEST => 'GET',\n   CURLOPT_HTTPHEADER => array(\n   'Authorization: Bearer <YOUR BEARER TOKEN>',\n   'x-api-key: <YOUR API KEY>')\n   CURLOPT_HTTPHEADER => array(\n      'Accept: application/json'\n   ),\n));\n\n$response = curl_exec($curl);\n\ncurl_close($curl);\necho $response;\n"
+      - lang: py
+        label: Python
+        source: "import requests\n\nurl = \"{{baseUrl}}/v1/messages?account-id=<string>&msisdn=<string>&iccid=<string>&from-date=<string>&to-date=<string>&direction=<string>&mid=<string>&page-index=1&max-page-item=10&sort-order=desc\"\n\npayload = {}\nheaders = {\n   'Accept': 'application/json'\n}\n\nresponse = requests.request(\"GET\", url, headers=headers, data=payload)\n\nprint(response.text)\n"
+      security:
+      - {}
+      - Auth: []
+      - api_key: []
+components:
+  parameters:
+    account-id:
+      name: account-id
+      in: path
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  schemas:
+    xxx_Error:
+      type: object
+      properties:
+        message:
+          type: string
+    Error:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        error:
+          type: integer
+          format: int32
+        message:
+          type: string
+    NotFound_Error:
+      type: object
+      properties:
+        INFO:
+          type: string
+    5xx_Error:
+      type: object
+      properties:
+        StatusCode:
+          type: integer
+        Messages:
+          type: array
+          items:
+            type: string
+        ErrorMessages:
+          type: array
+          items:
+            type: string
+    400_Error:
+      type: object
+      properties:
+        status:
+          type: string
+        errorMessage:
+          type: string
+    Sendnewmessage0:
+      type: object
+      properties:
+        from:
+          type: string
+          description: " Optional, if omitted the short-code associated with the service type will automatically be set as the Originating Address of the SMS. \n\n ‎"
+        subscription-id:
+          type: string
+          description: "Optional and mutually exclusive with msisdn and iccid; recommended for use. \n **Note:** At least one of the parameters (subscription-id, iccid, or msisdn) must be used.\n\n ‎"
+        iccid:
+          type: string
+          description: "Optional and mutually exclusive with subscription-id and msisdn; recommended for use. \n **Note:** At least one of the parameters (subscription-id, iccid, or msisdn) must be used. \n\n ‎"
+        msisdn:
+          type: string
+          description: "Optional and mutually exclusive with subscription-id and iccid; not recommended to be used due to potential change of MSISDN during the SIM lifecycle and unavailability of MSISDN  for some Service Types. \n **Note:** At least one of the parameters (subscription-id, iccid, or msisdn) must be used. \n\n ‎"
+        message:
+          type: string
+          description: The message body of the SMS.
+      required:
+      - message
+    200Sendnewmessage0:
+      type: object
+      properties:
+        mid:
+          type: string
+          description: ID for the accepted requests.
+        code:
+          type: integer
+          description: code
+        message:
+          type: string
+          description: message
+        status:
+          type: string
+          description: status
+    400Sendnewmessage0:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message
+        code:
+          type: integer
+          description: code
+        status:
+          type: string
+          description: status
+    401Sendnewmessage0:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message
+        code:
+          type: integer
+          description: code
+        status:
+          type: string
+          description: status
+    403Sendnewmessage0:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message
+        code:
+          type: integer
+          description: code
+        status:
+          type: string
+          description: status
+    404Sendnewmessage0:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message
+        code:
+          type: integer
+          description: code
+        status:
+          type: string
+          description: status
+    422Sendnewmessage0:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message
+        code:
+          type: integer
+          description: code
+        status:
+          type: string
+          description: status
+    500Sendnewmessage0:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message
+        code:
+          type: integer
+          description: code
+        status:
+          type: string
+          description: status
+    200GetMessages0:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            type: object
+            properties:
+              short-code:
+                type: string
+                description: short-code
+              iccid:
+                type: string
+                description: iccid
+              account-id:
+                type: string
+                description: account-id
+              organization:
+                type: string
+                description: organization
+              mid:
+                type: string
+                description: mid
+              action:
+                type: string
+                description: action
+              detail:
+                type: string
+                description: detail
+              msisdn:
+                type: string
+                description: msisdn
+              service-type-id:
+                type: integer
+                description: service-type-id
+              date-created:
+                type: string
+                description: date-created
+              status:
+                type: string
+                description: status
+          description: messages
+        page-info-result:
+          type: object
+          properties:
+            total-count:
+              type: integer
+              description: ' total count'
+            page-index:
+              type: integer
+              description: Number of results per page
+            max-page-item:
+              type: integer
+              description: ' Page number for pagination'
+          description: page-info-result
+    400GetMessages0:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message
+        code:
+          type: integer
+          description: code
+        status:
+          type: string
+          description: status
+    401GetMessages0:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message
+        code:
+          type: integer
+          description: code
+        status:
+          type: string
+          description: status
+    403GetMessages0:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message
+        code:
+          type: integer
+          description: code
+        status:
+          type: string
+          description: status
+    500GetMessages0:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message
+        code:
+          type: integer
+          description: code
+        status:
+          type: string
+          description: status
+    404GetMessages0:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message
+        code:
+          type: integer
+          description: code
+        status:
+          type: string
+          description: status
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+    Auth:
+      type: oauth2
+      description: token expiry is given in seconds
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.korewireless.com/Api/api/token
+          scopes: {}
